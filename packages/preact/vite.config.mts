@@ -11,6 +11,9 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: 'index',
     },
+    rollupOptions: {
+      external: ['preact', 'preact/hooks'],
+    },
   },
   plugins: [
     preact(),

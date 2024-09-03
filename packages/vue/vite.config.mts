@@ -12,6 +12,9 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: 'index',
     },
+    rollupOptions: {
+      external: ['vue'],
+    },
   },
   plugins: [
     AutoImport({

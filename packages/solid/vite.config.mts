@@ -11,6 +11,9 @@ export default defineConfig({
       formats: ['es', 'cjs'],
       fileName: 'index',
     },
+    rollupOptions: {
+      external: ['solid-js'],
+    },
   },
   plugins: [
     solid(),
