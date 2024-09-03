@@ -1,4 +1,5 @@
 import vue from '@vitejs/plugin-vue';
+import { copyFileSync } from 'node:fs';
 import AutoImport from 'unplugin-auto-import/vite';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -7,8 +8,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: './src/index.ts',
-      name: '@documenso/embed-preact',
-      formats: ['es', 'cjs', 'umd'],
+      name: '@documenso/embed-vue',
+      formats: ['es', 'cjs'],
       fileName: 'index',
     },
   },
@@ -18,6 +19,11 @@ export default defineConfig({
       vueTemplate: true,
     }),
     vue(),
-    dts({ include: ['src', 'auto-imports.d.ts'] }),
+    dts({
+      include: ['src', 'auto-imports.d.ts'],
+      afterBuild() {
+        copyFileSync('dist/index.d.ts', 'dist/index.d.mts');
+      },
+    }),
   ],
 });

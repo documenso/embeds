@@ -2,22 +2,30 @@
   "name": "@documenso/embed-svelte",
   "version": "0.0.1",
   "license": "MIT",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "types": "dist/index.d.ts",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs",
-      "svelte": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
     }
   },
   "scripts": {
     "build": "svelte-package -i src/",
     "clean": "rimraf node_modules",
-    "check-exports": "attw --pack ."
+    "check-exports": "attw --pack .",
+    "publint": "publint"
   },
   "dependencies": {},
   "peerDependencies": {
