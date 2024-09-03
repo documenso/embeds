@@ -1,0 +1,33 @@
+{
+  "name": "@documenso/embed-react",
+  "version": "0.0.1",
+  "license": "MIT",
+  "files": ["dist"],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "clean": "rimraf node_modules",
+    "check-exports": "attw --pack ."
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@documenso/embed": "*",
+    "@types/react": "^18.0.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.1.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "../../tooling/typescript/react-library.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
+  },
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@documenso/embed-svelte",
+  "version": "0.0.1",
+  "license": "MIT",
+  "files": ["dist"],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "svelte": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "svelte-package -i src/",
+    "clean": "rimraf node_modules",
+    "check-exports": "attw --pack ."
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "svelte": "^4.0.0"
+  },
+  "devDependencies": {
+    "@documenso/embed": "*",
+    "@sveltejs/adapter-auto": "^3.2.4",
+    "@sveltejs/kit": "^2.5.25",
+    "@sveltejs/package": "^2.3.4",
+    "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.1.0"
+  }
+}

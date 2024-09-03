@@ -1,0 +1,9 @@
+{
+  "extends": "../../tooling/typescript/react-library.json",
+  "compilerOptions": {
+    "moduleResolution": "Bundler",
+    "jsxImportSource": "@builder.io/mitosis"
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  "exclude": ["dist", "build", "node_modules"]
+}

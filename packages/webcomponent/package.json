@@ -1,0 +1,36 @@
+{
+  "name": "@documenso/embed-webcomponent",
+  "version": "0.0.1",
+  "license": "MIT",
+  "files": ["dist"],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "clean": "rimraf node_modules",
+    "check-exports": "attw --pack ."
+  },
+  
+  "dependencies": {
+    "@documenso/embed-preact": "*",
+    "preact": "^10.0.0",
+    "preact-custom-element": "^4.3.0"
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "@documenso/embed": "*",
+    "@types/preact-custom-element": "^4.0.4",
+    "vite": "^5.4.2",
+    "vite-plugin-dts": "^4.1.0"
+  }
+}
