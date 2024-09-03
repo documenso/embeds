@@ -21,6 +21,9 @@
       }
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "svelte-package -i src/",
     "clean": "rimraf node_modules",
