@@ -27,7 +27,7 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
 
   const state = useStore({
     get src() {
-      const host = props.host || 'https://app.documenso.com';
+      const appHost = props.host || 'https://app.documenso.com';
 
       const encodedOptions = btoa(
         JSON.stringify({
@@ -39,7 +39,7 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
         }),
       );
 
-      const srcUrl = new URL(`/embed/direct/${props.token}`, host);
+      const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);
 
       if (props.externalId) {
         srcUrl.searchParams.set('externalId', props.externalId);

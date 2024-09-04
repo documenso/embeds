@@ -20,7 +20,7 @@ export type EmbedSignDocumentProps = {
 
 function EmbedSignDocument(props: EmbedSignDocumentProps) {
   const src = createMemo(() => {
-    const host = props.host || "https://app.documenso.com";
+    const appHost = props.host || "https://app.documenso.com";
     const encodedOptions = btoa(
       JSON.stringify({
         name: props.name,
@@ -28,7 +28,7 @@ function EmbedSignDocument(props: EmbedSignDocumentProps) {
         css: props.css,
       })
     );
-    const srcUrl = new URL(`/embed/sign/${props.token}`, host);
+    const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);
     return `${srcUrl}#${encodedOptions}`;
   });
 

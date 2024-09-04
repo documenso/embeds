@@ -72,7 +72,7 @@
     }
   }
   $: src = () => {
-    const host = host || "https://app.documenso.com";
+    const appHost = host || "https://app.documenso.com";
     const encodedOptions = btoa(
       JSON.stringify({
         name: name,
@@ -82,7 +82,7 @@
         css: css,
       })
     );
-    const srcUrl = new URL(`/embed/direct/${token}`, host);
+    const srcUrl = new URL(`/embed/direct/${token}`, appHost);
 
     if (externalId) {
       srcUrl.searchParams.set("externalId", externalId);

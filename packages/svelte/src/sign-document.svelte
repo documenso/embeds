@@ -52,7 +52,7 @@
     }
   }
   $: src = () => {
-    const host = host || "https://app.documenso.com";
+    const appHost = host || "https://app.documenso.com";
     const encodedOptions = btoa(
       JSON.stringify({
         name: name,
@@ -60,7 +60,7 @@
         css: css,
       })
     );
-    const srcUrl = new URL(`/embed/sign/${token}`, host);
+    const srcUrl = new URL(`/embed/sign/${token}`, appHost);
     return `${srcUrl}#${encodedOptions}`;
   };
 

@@ -25,7 +25,7 @@ export type EmbedDirectTemplateProps = {
 
 function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
   const src = createMemo(() => {
-    const host = props.host || "https://app.documenso.com";
+    const appHost = props.host || "https://app.documenso.com";
     const encodedOptions = btoa(
       JSON.stringify({
         name: props.name,
@@ -35,7 +35,7 @@ function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
         css: props.css,
       })
     );
-    const srcUrl = new URL(`/embed/direct/${props.token}`, host);
+    const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);
 
     if (props.externalId) {
       srcUrl.searchParams.set("externalId", props.externalId);

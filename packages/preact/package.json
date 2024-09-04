@@ -26,7 +26,7 @@
   },
   "scripts": {
     "build": "vite build",
-    "clean": "rimraf node_modules",
+    "clean": "rimraf node_modules && rimraf src",
     "check-exports": "attw --pack .",
     "publint": "publint"
   },

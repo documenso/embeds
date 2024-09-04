@@ -39,7 +39,7 @@ onUnmounted(() => {
   window.removeEventListener("message", handleMessage);
 });
 const src = computed(() => {
-  const host = props.host || "https://app.documenso.com";
+  const appHost = props.host || "https://app.documenso.com";
   const encodedOptions = btoa(
     JSON.stringify({
       name: props.name,
@@ -49,7 +49,7 @@ const src = computed(() => {
       css: props.css,
     })
   );
-  const srcUrl = new URL(`/embed/direct/${props.token}`, host);
+  const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);
 
   if (props.externalId) {
     srcUrl.searchParams.set("externalId", props.externalId);

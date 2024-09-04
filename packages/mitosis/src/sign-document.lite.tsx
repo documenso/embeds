@@ -22,7 +22,7 @@ export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
 
   const state = useStore({
     get src() {
-      const host = props.host || 'https://app.documenso.com';
+      const appHost = props.host || 'https://app.documenso.com';
 
       const encodedOptions = btoa(
         JSON.stringify({
@@ -32,7 +32,7 @@ export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
         }),
       );
 
-      const srcUrl = new URL(`/embed/sign/${props.token}`, host);
+      const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);
 
       return `${srcUrl}#${encodedOptions}`;
     },
