@@ -1,6 +1,7 @@
 # Documenso Embeds
 
 Documenso Embeds provides native embedding packages for the Documenso application. These packages allow developers to easily integrate the document signing capabilities of Documenso into their applications.
+Check out the docs here: https://docs.documenso.com/developers/embedding
 
 ## Purpose
 
