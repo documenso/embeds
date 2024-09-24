@@ -1,0 +1,48 @@
+{
+  "name": "@documenso/embed-angular",
+  "version": "0.0.0",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/esm2022/index.mjs",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/esm2022/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "./bin/build.sh",
+    "clean": "rimraf node_modules && rimraf src",
+    "check-exports": "attw --pack .",
+    "publint": "publint"
+  },
+  "peerDependencies": {
+    "@angular/common": "^18.2.0",
+    "@angular/core": "^18.2.0",
+    "@angular/platform-browser": "^18.2.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^18.2.4",
+    "@angular/cli": "^18.2.4",
+    "@documenso/embed": "*",
+    "ng-packagr": "^18.2.0",
+    "rollup": "^4.20.0",
+    "tslib": "^2.3.0"
+  }
+}
