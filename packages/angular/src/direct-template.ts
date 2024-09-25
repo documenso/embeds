@@ -1,6 +1,6 @@
+import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 
 export type EmbedDirectTemplateProps = {
   className?: string;

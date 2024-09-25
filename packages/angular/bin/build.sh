@@ -1,14 +1,28 @@
 #!/bin/bash
 
-cd "../$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
-# Check if the Angular build requirements are done
-if [ ! -f "./src/trusted-resource-url-pipe.ts" ]; then
-    echo "----------------------------------------------" >&2
-    echo "Please review the README.md build instructions" >&2
-    echo "----------------------------------------------" >&2
-    exit 1
-fi
+# Replace or copy ./util/trusted-resource-url-pipe.ts to ./src/trusted-resource-url-pipe.ts 
+cp ./util/trusted-resource-url-pipe.ts ./src/trusted-resource-url-pipe.ts
+
+# Array of files to process
+files=('./src/direct-template.ts' './src/sign-document.ts')
+
+# Loop over the array of files
+for file in "${files[@]}"
+do
+    # Update the iframe line
+    sed -i '' 's/<iframe #__iframe \[class\]="className" \[attr\.src\]="src"><\/iframe>/<iframe #__iframe \[class\]="className" \[attr\.src\]="src | trustedResourceUrl"><\/iframe>/' "$file"
+
+    # Update the imports line
+    sed -i '' 's/imports: \[CommonModule\],/imports: \[CommonModule, TrustedResourceUrlPipe\],/' "$file"
+
+    # Add the import statement at the top of the file
+    sed -i '' '1i\
+import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
+' "$file"
+
+done
 
 ng build
 rollup --config

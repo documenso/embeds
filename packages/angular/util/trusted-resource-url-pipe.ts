@@ -5,7 +5,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
  * Kept outside of src since it's custom.
  */
 @Pipe({
-  name: 'trustedResourceUrl'
+  name: 'trustedResourceUrl',
+  standalone: true,
 })
 export class TrustedResourceUrlPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
