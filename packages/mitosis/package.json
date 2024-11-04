@@ -8,7 +8,7 @@
     "clean": "rimraf node_modules"
   },
   "dependencies": {
-    "@builder.io/mitosis": "^0.4.2",
+    "@builder.io/mitosis": "^0.5.16",
     "@builder.io/mitosis-cli": "^0.4.2"
   }
 }
