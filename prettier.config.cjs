@@ -18,10 +18,12 @@ module.exports = {
   ],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
+  importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
 
   plugins: [
     '@trivago/prettier-plugin-sort-imports',
     'prettier-plugin-sql',
+    'prettier-plugin-svelte',
     'prettier-plugin-tailwindcss',
   ],
 
@@ -34,5 +36,11 @@ module.exports = {
         expressionWidth: 60,
       },
     },
+    {
+      files: ['*.svelte'],
+      options: {
+        parser: 'svelte',
+      }
+    }
   ],
 };

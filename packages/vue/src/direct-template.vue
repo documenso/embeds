@@ -5,6 +5,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted } from "vue";
 
+import { CssVars } from "./css-vars";
+
 export type EmbedDirectTemplateProps = {
   className?: string;
   host?: string;
@@ -12,7 +14,8 @@ export type EmbedDirectTemplateProps = {
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+  darkModeDisabled?: boolean | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
   name?: string | undefined;
@@ -47,6 +50,8 @@ const src = computed(() => {
       email: props.email,
       lockEmail: props.lockEmail,
       css: props.css,
+      cssVars: props.cssVars,
+      darkModeDisabled: props.darkModeDisabled,
     })
   );
   const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);

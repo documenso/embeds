@@ -6,7 +6,8 @@
     externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
     css?: string | undefined;
-    cssVars?: Record<string, string> | undefined;
+    cssVars?: (CssVars & Record<string, string>) | undefined;
+    darkModeDisabled?: boolean | undefined;
     email?: string | undefined;
     lockEmail?: boolean | undefined;
     name?: string | undefined;
@@ -26,12 +27,17 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
 
+  import { CssVars } from "./css-vars";
+
   export let host: EmbedDirectTemplateProps["host"] = undefined;
   export let name: EmbedDirectTemplateProps["name"] = undefined;
   export let lockName: EmbedDirectTemplateProps["lockName"] = undefined;
   export let email: EmbedDirectTemplateProps["email"] = undefined;
   export let lockEmail: EmbedDirectTemplateProps["lockEmail"] = undefined;
   export let css: EmbedDirectTemplateProps["css"] = undefined;
+  export let cssVars: EmbedDirectTemplateProps["cssVars"] = undefined;
+  export let darkModeDisabled: EmbedDirectTemplateProps["darkModeDisabled"] =
+    undefined;
   export let token: EmbedDirectTemplateProps["token"];
   export let externalId: EmbedDirectTemplateProps["externalId"] = undefined;
   export let onDocumentReady: EmbedDirectTemplateProps["onDocumentReady"] =
@@ -80,6 +86,8 @@
         email: email,
         lockEmail: lockEmail,
         css: css,
+        cssVars: cssVars,
+        darkModeDisabled: darkModeDisabled,
       })
     );
     const srcUrl = new URL(`/embed/direct/${token}`, appHost);

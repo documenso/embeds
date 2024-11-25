@@ -8,7 +8,8 @@ export type EmbedSignDocumentProps = {
   token: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+  darkModeDisabled?: boolean | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   onDocumentReady?: () => void;
@@ -19,6 +20,7 @@ export type EmbedSignDocumentProps = {
   }) => void;
   onDocumentError?: (error: string) => void;
 };
+import { CssVars } from "./css-vars";
 
 function EmbedSignDocument(props: EmbedSignDocumentProps) {
   const __iframe = useRef<HTMLIFrameElement>(null);
@@ -29,6 +31,8 @@ function EmbedSignDocument(props: EmbedSignDocumentProps) {
         name: props.name,
         lockName: props.lockName,
         css: props.css,
+        cssVars: props.cssVars,
+        darkModeDisabled: props.darkModeDisabled,
       })
     );
     const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);
