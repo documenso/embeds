@@ -8,7 +8,8 @@ export type EmbedSignDocumentProps = {
   token: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+  darkModeDisabled?: boolean | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   onDocumentReady?: () => void;
@@ -19,6 +20,8 @@ export type EmbedSignDocumentProps = {
   }) => void;
   onDocumentError?: (error: string) => void;
 };
+
+import { CssVars } from "./css-vars";
 
 @Component({
   selector: "embed-sign-document, EmbedSignDocument",
@@ -40,6 +43,8 @@ export default class EmbedSignDocument {
   @Input() name!: EmbedSignDocumentProps["name"];
   @Input() lockName!: EmbedSignDocumentProps["lockName"];
   @Input() css!: EmbedSignDocumentProps["css"];
+  @Input() cssVars!: EmbedSignDocumentProps["cssVars"];
+  @Input() darkModeDisabled!: EmbedSignDocumentProps["darkModeDisabled"];
   @Input() token!: EmbedSignDocumentProps["token"];
   @Input() onDocumentReady!: EmbedSignDocumentProps["onDocumentReady"];
   @Input() onDocumentCompleted!: EmbedSignDocumentProps["onDocumentCompleted"];
@@ -55,6 +60,8 @@ export default class EmbedSignDocument {
         name: this.name,
         lockName: this.lockName,
         css: this.css,
+        cssVars: this.cssVars,
+        darkModeDisabled: this.darkModeDisabled,
       })
     );
     const srcUrl = new URL(`/embed/sign/${this.token}`, appHost);

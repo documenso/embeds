@@ -9,7 +9,8 @@ export type EmbedDirectTemplateProps = {
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+  darkModeDisabled?: boolean | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
   name?: string | undefined;
@@ -24,6 +25,8 @@ export type EmbedDirectTemplateProps = {
   onFieldSigned?: () => void;
   onFieldUnsigned?: () => void;
 };
+
+import { CssVars } from "./css-vars";
 
 @Component({
   selector: "embed-direct-template, EmbedDirectTemplate",
@@ -47,6 +50,8 @@ export default class EmbedDirectTemplate {
   @Input() email!: EmbedDirectTemplateProps["email"];
   @Input() lockEmail!: EmbedDirectTemplateProps["lockEmail"];
   @Input() css!: EmbedDirectTemplateProps["css"];
+  @Input() cssVars!: EmbedDirectTemplateProps["cssVars"];
+  @Input() darkModeDisabled!: EmbedDirectTemplateProps["darkModeDisabled"];
   @Input() token!: EmbedDirectTemplateProps["token"];
   @Input() externalId!: EmbedDirectTemplateProps["externalId"];
   @Input() onDocumentReady!: EmbedDirectTemplateProps["onDocumentReady"];
@@ -68,6 +73,8 @@ export default class EmbedDirectTemplate {
         email: this.email,
         lockEmail: this.lockEmail,
         css: this.css,
+        cssVars: this.cssVars,
+        darkModeDisabled: this.darkModeDisabled,
       })
     );
     const srcUrl = new URL(`/embed/direct/${this.token}`, appHost);

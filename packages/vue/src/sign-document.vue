@@ -5,13 +5,16 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted } from "vue";
 
+import { CssVars } from "./css-vars";
+
 export type EmbedSignDocumentProps = {
   className?: string;
   host?: string;
   token: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+  darkModeDisabled?: boolean | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   onDocumentReady?: () => void;
@@ -40,6 +43,8 @@ const src = computed(() => {
       name: props.name,
       lockName: props.lockName,
       css: props.css,
+      cssVars: props.cssVars,
+      darkModeDisabled: props.darkModeDisabled,
     })
   );
   const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);

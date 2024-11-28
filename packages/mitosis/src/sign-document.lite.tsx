@@ -1,5 +1,7 @@
 import { onMount, onUnMount, useRef, useStore } from '@builder.io/mitosis';
 
+import { CssVars } from './css-vars';
+
 export type EmbedSignDocumentProps = {
   className?: string;
   host?: string;
@@ -7,7 +9,9 @@ export type EmbedSignDocumentProps = {
 
   // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+
+  darkModeDisabled?: boolean | undefined;
 
   name?: string | undefined;
   lockName?: boolean | undefined;
@@ -28,7 +32,10 @@ export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
         JSON.stringify({
           name: props.name,
           lockName: props.lockName,
+
           css: props.css,
+          cssVars: props.cssVars,
+          darkModeDisabled: props.darkModeDisabled,
         }),
       );
 

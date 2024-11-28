@@ -1,5 +1,7 @@
 import { onMount, onUnMount, useRef, useStore } from '@builder.io/mitosis';
 
+import { CssVars } from './css-vars';
+
 export type EmbedDirectTemplateProps = {
   className?: string;
   host?: string;
@@ -8,7 +10,9 @@ export type EmbedDirectTemplateProps = {
 
   // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+
+  darkModeDisabled?: boolean | undefined;
 
   email?: string | undefined;
   lockEmail?: boolean | undefined;
@@ -35,7 +39,10 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
           lockName: props.lockName,
           email: props.email,
           lockEmail: props.lockEmail,
+
           css: props.css,
+          cssVars: props.cssVars,
+          darkModeDisabled: props.darkModeDisabled,
         }),
       );
 

@@ -7,7 +7,8 @@ export type EmbedDirectTemplateProps = {
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
-  cssVars?: Record<string, string> | undefined;
+  cssVars?: (CssVars & Record<string, string>) | undefined;
+  darkModeDisabled?: boolean | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
   name?: string | undefined;
@@ -23,6 +24,8 @@ export type EmbedDirectTemplateProps = {
   onFieldUnsigned?: () => void;
 };
 
+import { CssVars } from "./css-vars";
+
 function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
   const src = createMemo(() => {
     const appHost = props.host || "https://app.documenso.com";
@@ -33,6 +36,8 @@ function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
         email: props.email,
         lockEmail: props.lockEmail,
         css: props.css,
+        cssVars: props.cssVars,
+        darkModeDisabled: props.darkModeDisabled,
       })
     );
     const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);
