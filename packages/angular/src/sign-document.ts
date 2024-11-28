@@ -56,13 +56,15 @@ export default class EmbedSignDocument {
   get src() {
     const appHost = this.host || "https://app.documenso.com";
     const encodedOptions = btoa(
-      JSON.stringify({
-        name: this.name,
-        lockName: this.lockName,
-        css: this.css,
-        cssVars: this.cssVars,
-        darkModeDisabled: this.darkModeDisabled,
-      })
+      encodeURIComponent(
+        JSON.stringify({
+          name: this.name,
+          lockName: this.lockName,
+          css: this.css,
+          cssVars: this.cssVars,
+          darkModeDisabled: this.darkModeDisabled,
+        })
+      )
     );
     const srcUrl = new URL(`/embed/sign/${this.token}`, appHost);
     return `${srcUrl}#${encodedOptions}`;

@@ -60,13 +60,15 @@
   $: src = () => {
     const appHost = host || "https://app.documenso.com";
     const encodedOptions = btoa(
-      JSON.stringify({
-        name: name,
-        lockName: lockName,
-        css: css,
-        cssVars: cssVars,
-        darkModeDisabled: darkModeDisabled,
-      })
+      encodeURIComponent(
+        JSON.stringify({
+          name: name,
+          lockName: lockName,
+          css: css,
+          cssVars: cssVars,
+          darkModeDisabled: darkModeDisabled,
+        })
+      )
     );
     const srcUrl = new URL(`/embed/sign/${token}`, appHost);
     return `${srcUrl}#${encodedOptions}`;

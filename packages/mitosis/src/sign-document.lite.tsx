@@ -29,14 +29,16 @@ export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
       const appHost = props.host || 'https://app.documenso.com';
 
       const encodedOptions = btoa(
-        JSON.stringify({
-          name: props.name,
-          lockName: props.lockName,
+        encodeURIComponent(
+          JSON.stringify({
+            name: props.name,
+            lockName: props.lockName,
 
-          css: props.css,
-          cssVars: props.cssVars,
-          darkModeDisabled: props.darkModeDisabled,
-        }),
+            css: props.css,
+            cssVars: props.cssVars,
+            darkModeDisabled: props.darkModeDisabled,
+          }),
+        ),
       );
 
       const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);

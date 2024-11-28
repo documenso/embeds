@@ -80,15 +80,17 @@
   $: src = () => {
     const appHost = host || "https://app.documenso.com";
     const encodedOptions = btoa(
-      JSON.stringify({
-        name: name,
-        lockName: lockName,
-        email: email,
-        lockEmail: lockEmail,
-        css: css,
-        cssVars: cssVars,
-        darkModeDisabled: darkModeDisabled,
-      })
+      encodeURIComponent(
+        JSON.stringify({
+          name: name,
+          lockName: lockName,
+          email: email,
+          lockEmail: lockEmail,
+          css: css,
+          cssVars: cssVars,
+          darkModeDisabled: darkModeDisabled,
+        })
+      )
     );
     const srcUrl = new URL(`/embed/direct/${token}`, appHost);
 

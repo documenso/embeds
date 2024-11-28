@@ -34,16 +34,18 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
       const appHost = props.host || 'https://app.documenso.com';
 
       const encodedOptions = btoa(
-        JSON.stringify({
-          name: props.name,
-          lockName: props.lockName,
-          email: props.email,
-          lockEmail: props.lockEmail,
+        encodeURIComponent(
+          JSON.stringify({
+            name: props.name,
+            lockName: props.lockName,
+            email: props.email,
+            lockEmail: props.lockEmail,
 
-          css: props.css,
-          cssVars: props.cssVars,
-          darkModeDisabled: props.darkModeDisabled,
-        }),
+            css: props.css,
+            cssVars: props.cssVars,
+            darkModeDisabled: props.darkModeDisabled,
+          }),
+        ),
       );
 
       const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);

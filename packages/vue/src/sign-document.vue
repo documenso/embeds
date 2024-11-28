@@ -39,13 +39,15 @@ onUnmounted(() => {
 const src = computed(() => {
   const appHost = props.host || "https://app.documenso.com";
   const encodedOptions = btoa(
-    JSON.stringify({
-      name: props.name,
-      lockName: props.lockName,
-      css: props.css,
-      cssVars: props.cssVars,
-      darkModeDisabled: props.darkModeDisabled,
-    })
+    encodeURIComponent(
+      JSON.stringify({
+        name: props.name,
+        lockName: props.lockName,
+        css: props.css,
+        cssVars: props.cssVars,
+        darkModeDisabled: props.darkModeDisabled,
+      })
+    )
   );
   const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);
   return `${srcUrl}#${encodedOptions}`;

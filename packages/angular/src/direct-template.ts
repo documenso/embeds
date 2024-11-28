@@ -67,15 +67,17 @@ export default class EmbedDirectTemplate {
   get src() {
     const appHost = this.host || "https://app.documenso.com";
     const encodedOptions = btoa(
-      JSON.stringify({
-        name: this.name,
-        lockName: this.lockName,
-        email: this.email,
-        lockEmail: this.lockEmail,
-        css: this.css,
-        cssVars: this.cssVars,
-        darkModeDisabled: this.darkModeDisabled,
-      })
+      encodeURIComponent(
+        JSON.stringify({
+          name: this.name,
+          lockName: this.lockName,
+          email: this.email,
+          lockEmail: this.lockEmail,
+          css: this.css,
+          cssVars: this.cssVars,
+          darkModeDisabled: this.darkModeDisabled,
+        })
+      )
     );
     const srcUrl = new URL(`/embed/direct/${this.token}`, appHost);
 
