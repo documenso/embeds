@@ -12,6 +12,10 @@ export type EmbedSignDocumentProps = {
   darkModeDisabled?: boolean | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
+  allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
+
+  additionalProps?: Record<string, string | number | boolean> | undefined;
   onDocumentReady?: () => void;
   onDocumentCompleted?: (data: {
     token: string;
@@ -19,6 +23,12 @@ export type EmbedSignDocumentProps = {
     recipientId: number;
   }) => void;
   onDocumentError?: (error: string) => void;
+  onDocumentRejected?: (data: {
+    token: string;
+    documentId: number;
+    recipientId: number;
+    reason: string;
+  }) => void;
 };
 import { CssVars } from "./css-vars";
 
@@ -34,6 +44,8 @@ function EmbedSignDocument(props: EmbedSignDocumentProps) {
           css: props.css,
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
+          allowDocumentRejection: props.allowDocumentRejection,
+          ...props.additionalProps,
         })
       )
     );
@@ -54,6 +66,10 @@ function EmbedSignDocument(props: EmbedSignDocumentProps) {
 
         case "document-error":
           props.onDocumentError?.(event.data.data);
+          break;
+
+        case "document-rejected":
+          props.onDocumentRejected?.(event.data.data);
           break;
       }
     }

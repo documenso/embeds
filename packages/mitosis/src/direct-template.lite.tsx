@@ -19,6 +19,10 @@ export type EmbedDirectTemplateProps = {
   name?: string | undefined;
   lockName?: boolean | undefined;
 
+  // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
+  additionalProps?: Record<string, string | number | boolean> | undefined;
+
   onDocumentReady?: () => void;
   onDocumentCompleted?: (data: { token: string; documentId: number; recipientId: number }) => void;
   onDocumentError?: (error: string) => void;
@@ -44,6 +48,7 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            ...props.additionalProps,
           }),
         ),
       );

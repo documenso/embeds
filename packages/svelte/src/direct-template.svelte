@@ -11,7 +11,10 @@
     email?: string | undefined;
     lockEmail?: boolean | undefined;
     name?: string | undefined;
-    lockName?: boolean | undefined;
+    lockName?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
+    // prior to being added to the main props
+
+    additionalProps?: Record<string, string | number | boolean> | undefined;
     onDocumentReady?: () => void;
     onDocumentCompleted?: (data: {
       token: string;
@@ -37,6 +40,8 @@
   export let css: EmbedDirectTemplateProps["css"] = undefined;
   export let cssVars: EmbedDirectTemplateProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedDirectTemplateProps["darkModeDisabled"] =
+    undefined;
+  export let additionalProps: EmbedDirectTemplateProps["additionalProps"] =
     undefined;
   export let token: EmbedDirectTemplateProps["token"];
   export let externalId: EmbedDirectTemplateProps["externalId"] = undefined;
@@ -89,6 +94,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          ...additionalProps,
         })
       )
     );
