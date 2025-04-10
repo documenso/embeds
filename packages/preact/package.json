@@ -1,6 +1,6 @@
 {
   "name": "@documenso/embed-preact",
-  "version": "0.2.1-rc.0",
+  "version": "0.2.1-rc.1",
   "license": "MIT",
   "files": [
     "dist"
