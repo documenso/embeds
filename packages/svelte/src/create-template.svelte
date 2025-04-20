@@ -48,7 +48,7 @@
   function handleMessage(event: MessageEvent) {
     if (__iframe?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-completed":
+        case "template-created":
           onTemplateCreated?.({
             templateId: event.data.templateId,
             externalId: event.data.externalId,

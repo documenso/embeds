@@ -65,7 +65,7 @@ const src = computed(() => {
 function handleMessage(event: MessageEvent) {
   if (__iframe.value?.contentWindow === event.source) {
     switch (event.data.type) {
-      case "template-completed":
+      case "template-created":
         props.onTemplateCreated?.({
           templateId: event.data.templateId,
           externalId: event.data.externalId,

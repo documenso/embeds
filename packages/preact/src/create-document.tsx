@@ -53,7 +53,7 @@ function EmbedCreateDocument(props: EmbedCreateDocumentProps) {
   function handleMessage(event: MessageEvent) {
     if (__iframe.current?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "document-completed":
+        case "document-created":
           props.onDocumentCreated?.({
             documentId: event.data.documentId,
             externalId: event.data.externalId,

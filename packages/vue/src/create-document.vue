@@ -65,7 +65,7 @@ const src = computed(() => {
 function handleMessage(event: MessageEvent) {
   if (__iframe.value?.contentWindow === event.source) {
     switch (event.data.type) {
-      case "document-completed":
+      case "document-created":
         props.onDocumentCreated?.({
           documentId: event.data.documentId,
           externalId: event.data.externalId,

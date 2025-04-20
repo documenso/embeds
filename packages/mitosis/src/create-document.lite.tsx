@@ -61,7 +61,7 @@ export default function EmbedCreateDocument(props: EmbedCreateDocumentProps) {
     handleMessage(event: MessageEvent) {
       if (__iframe?.contentWindow === event.source) {
         switch (event.data.type) {
-          case 'document-completed':
+          case 'document-created':
             props.onDocumentCreated?.({
               documentId: event.data.documentId,
               externalId: event.data.externalId,

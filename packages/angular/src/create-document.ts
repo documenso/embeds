@@ -80,7 +80,7 @@ export default class EmbedCreateDocument {
   handleMessage(event: MessageEvent) {
     if (this.__iframe.nativeElement?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "document-completed":
+        case "document-created":
           this.onDocumentCreated?.({
             documentId: event.data.documentId,
             externalId: event.data.externalId,

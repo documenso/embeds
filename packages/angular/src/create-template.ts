@@ -80,7 +80,7 @@ export default class EmbedCreateTemplate {
   handleMessage(event: MessageEvent) {
     if (this.__iframe.nativeElement?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-completed":
+        case "template-created":
           this.onTemplateCreated?.({
             templateId: event.data.templateId,
             externalId: event.data.externalId,
