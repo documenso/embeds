@@ -1,11 +1,10 @@
-/** @jsx h */
-import { h, Fragment } from "preact";
-import { useRef, useEffect } from "preact/hooks";
+import { onMount, createSignal, createMemo } from "solid-js";
 
-export type EmbedCreateTemplateProps = {
+export type EmbedUpdateTemplateProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  templateId: number;
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
@@ -22,16 +21,16 @@ export type EmbedCreateTemplateProps = {
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
-  onTemplateCreated?: (data: {
+  onTemplateUpdated?: (data: {
     externalId: string;
     templateId: number;
   }) => void;
 };
+
 import { CssVars } from "./css-vars";
 
-function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
-  const __iframe = useRef<HTMLIFrameElement>(null);
-  function src() {
+function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
+  const src = createMemo(() => {
     const appHost = props.host || "https://app.documenso.com";
     const encodedOptions = btoa(
       encodeURIComponent(
@@ -45,17 +44,20 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
         })
       )
     );
-    const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+    const srcUrl = new URL(
+      `/embed/v1/authoring/template/update/${props.templateId}`,
+      appHost
+    );
     srcUrl.searchParams.set("token", props.presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
-  }
+  });
 
   function handleMessage(event: MessageEvent) {
-    if (__iframe.current?.contentWindow === event.source) {
+    if (__iframe?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-created":
-          props.onTemplateCreated?.({
+        case "template-updated":
+          props.onTemplateUpdated?.({
             templateId: event.data.templateId,
             externalId: event.data.externalId,
           });
@@ -64,17 +66,17 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
     }
   }
 
-  useEffect(() => {
+  let __iframe: HTMLIFrameElement;
+
+  onMount(() => {
     window.addEventListener("message", handleMessage);
-  }, []);
+  });
 
-  useEffect(() => {
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, []);
-
-  return <iframe ref={__iframe} className={props.className} src={src()} />;
+  return (
+    <>
+      <iframe class={props.className} ref={__iframe!} src={src()}></iframe>
+    </>
+  );
 }
 
-export default EmbedCreateTemplate;
+export default EmbedUpdateTemplate;

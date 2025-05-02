@@ -1,11 +1,11 @@
-import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-export type EmbedCreateTemplateProps = {
+export type EmbedUpdateTemplateProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  templateId: number;
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
@@ -22,7 +22,7 @@ export type EmbedCreateTemplateProps = {
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
-  onTemplateCreated?: (data: {
+  onTemplateUpdated?: (data: {
     externalId: string;
     templateId: number;
   }) => void;
@@ -31,9 +31,9 @@ export type EmbedCreateTemplateProps = {
 import { CssVars } from "./css-vars";
 
 @Component({
-  selector: "embed-create-template, EmbedCreateTemplate",
+  selector: "embed-update-template, EmbedUpdateTemplate",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
+    <iframe #__iframe [class]="className" [attr.src]="src"></iframe>
   `,
   styles: [
     `
@@ -43,19 +43,20 @@ import { CssVars } from "./css-vars";
     `,
   ],
   standalone: true,
-  imports: [CommonModule, TrustedResourceUrlPipe],
+  imports: [CommonModule],
 })
-export default class EmbedCreateTemplate {
-  @Input() host!: EmbedCreateTemplateProps["host"];
-  @Input() externalId!: EmbedCreateTemplateProps["externalId"];
-  @Input() features!: EmbedCreateTemplateProps["features"];
-  @Input() css!: EmbedCreateTemplateProps["css"];
-  @Input() cssVars!: EmbedCreateTemplateProps["cssVars"];
-  @Input() darkModeDisabled!: EmbedCreateTemplateProps["darkModeDisabled"];
-  @Input() additionalProps!: EmbedCreateTemplateProps["additionalProps"];
-  @Input() presignToken!: EmbedCreateTemplateProps["presignToken"];
-  @Input() onTemplateCreated!: EmbedCreateTemplateProps["onTemplateCreated"];
-  @Input() className!: EmbedCreateTemplateProps["className"];
+export default class EmbedUpdateTemplate {
+  @Input() host!: EmbedUpdateTemplateProps["host"];
+  @Input() externalId!: EmbedUpdateTemplateProps["externalId"];
+  @Input() features!: EmbedUpdateTemplateProps["features"];
+  @Input() css!: EmbedUpdateTemplateProps["css"];
+  @Input() cssVars!: EmbedUpdateTemplateProps["cssVars"];
+  @Input() darkModeDisabled!: EmbedUpdateTemplateProps["darkModeDisabled"];
+  @Input() additionalProps!: EmbedUpdateTemplateProps["additionalProps"];
+  @Input() templateId!: EmbedUpdateTemplateProps["templateId"];
+  @Input() presignToken!: EmbedUpdateTemplateProps["presignToken"];
+  @Input() onTemplateUpdated!: EmbedUpdateTemplateProps["onTemplateUpdated"];
+  @Input() className!: EmbedUpdateTemplateProps["className"];
 
   @ViewChild("__iframe") __iframe!: ElementRef;
 
@@ -73,7 +74,10 @@ export default class EmbedCreateTemplate {
         })
       )
     );
-    const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+    const srcUrl = new URL(
+      `/embed/v1/authoring/template/update/${this.templateId}`,
+      appHost
+    );
     srcUrl.searchParams.set("token", this.presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
@@ -81,8 +85,8 @@ export default class EmbedCreateTemplate {
   handleMessage(event: MessageEvent) {
     if (this.__iframe.nativeElement?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-created":
-          this.onTemplateCreated?.({
+        case "template-updated":
+          this.onTemplateUpdated?.({
             templateId: event.data.templateId,
             externalId: event.data.externalId,
           });

@@ -32,7 +32,6 @@
   import { CssVars } from "./css-vars";
 
   export let host: EmbedCreateDocumentProps["host"] = undefined;
-  export let presignToken: EmbedCreateDocumentProps["presignToken"];
   export let externalId: EmbedCreateDocumentProps["externalId"] = undefined;
   export let features: EmbedCreateDocumentProps["features"] = undefined;
   export let css: EmbedCreateDocumentProps["css"] = undefined;
@@ -41,6 +40,7 @@
     undefined;
   export let additionalProps: EmbedCreateDocumentProps["additionalProps"] =
     undefined;
+  export let presignToken: EmbedCreateDocumentProps["presignToken"];
   export let onDocumentCreated: EmbedCreateDocumentProps["onDocumentCreated"] =
     undefined;
   export let className: EmbedCreateDocumentProps["className"] = undefined;
@@ -62,7 +62,6 @@
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
-          token: presignToken,
           externalId: externalId,
           features: features,
           css: css,
@@ -73,7 +72,9 @@
       )
     );
     const srcUrl = new URL(`/embed/v1/authoring/document/create`, appHost);
-    return `${srcUrl}#${encodedOptions}`;
+    srcUrl.searchParams.set("token", presignToken);
+    srcUrl.hash = encodedOptions;
+    return srcUrl.toString();
   };
 
   let __iframe;

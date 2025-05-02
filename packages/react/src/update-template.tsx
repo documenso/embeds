@@ -1,11 +1,12 @@
-/** @jsx h */
-import { h, Fragment } from "preact";
-import { useRef, useEffect } from "preact/hooks";
+"use client";
+import * as React from "react";
+import { useRef, useEffect } from "react";
 
-export type EmbedCreateTemplateProps = {
+export type EmbedUpdateTemplateProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  templateId: number;
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
@@ -22,14 +23,14 @@ export type EmbedCreateTemplateProps = {
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
-  onTemplateCreated?: (data: {
+  onTemplateUpdated?: (data: {
     externalId: string;
     templateId: number;
   }) => void;
 };
 import { CssVars } from "./css-vars";
 
-function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
+function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
   const __iframe = useRef<HTMLIFrameElement>(null);
   function src() {
     const appHost = props.host || "https://app.documenso.com";
@@ -45,7 +46,10 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
         })
       )
     );
-    const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+    const srcUrl = new URL(
+      `/embed/v1/authoring/template/update/${props.templateId}`,
+      appHost
+    );
     srcUrl.searchParams.set("token", props.presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
@@ -54,8 +58,8 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
   function handleMessage(event: MessageEvent) {
     if (__iframe.current?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-created":
-          props.onTemplateCreated?.({
+        case "template-updated":
+          props.onTemplateUpdated?.({
             templateId: event.data.templateId,
             externalId: event.data.externalId,
           });
@@ -77,4 +81,4 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
   return <iframe ref={__iframe} className={props.className} src={src()} />;
 }
 
-export default EmbedCreateTemplate;
+export default EmbedUpdateTemplate;

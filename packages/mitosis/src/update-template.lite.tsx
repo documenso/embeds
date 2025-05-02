@@ -2,10 +2,11 @@ import { onMount, onUnMount, useRef, useStore } from '@builder.io/mitosis';
 
 import { CssVars } from './css-vars';
 
-export type EmbedCreateTemplateProps = {
+export type EmbedUpdateTemplateProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  templateId: number;
   externalId?: string;
 
   // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
@@ -27,10 +28,10 @@ export type EmbedCreateTemplateProps = {
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
 
-  onTemplateCreated?: (data: { externalId: string; templateId: number }) => void;
+  onTemplateUpdated?: (data: { externalId: string; templateId: number }) => void;
 };
 
-export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
+export default function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
   const __iframe = useRef<HTMLIFrameElement>(null);
 
   const state = useStore({
@@ -51,7 +52,7 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
         ),
       );
 
-      const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+      const srcUrl = new URL(`/embed/v1/authoring/template/update/${props.templateId}`, appHost);
 
       srcUrl.searchParams.set('token', props.presignToken);
       srcUrl.hash = encodedOptions;
@@ -62,8 +63,8 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
     handleMessage(event: MessageEvent) {
       if (__iframe?.contentWindow === event.source) {
         switch (event.data.type) {
-          case 'template-created':
-            props.onTemplateCreated?.({
+          case 'template-updated':
+            props.onTemplateUpdated?.({
               templateId: event.data.templateId,
               externalId: event.data.externalId,
             });

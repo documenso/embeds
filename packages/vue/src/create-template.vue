@@ -48,7 +48,6 @@ const src = computed(() => {
   const encodedOptions = btoa(
     encodeURIComponent(
       JSON.stringify({
-        token: props.presignToken,
         externalId: props.externalId,
         features: props.features,
         css: props.css,
@@ -59,7 +58,9 @@ const src = computed(() => {
     )
   );
   const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
-  return `${srcUrl}#${encodedOptions}`;
+  srcUrl.searchParams.set("token", props.presignToken);
+  srcUrl.hash = encodedOptions;
+  return srcUrl.toString();
 });
 
 function handleMessage(event: MessageEvent) {

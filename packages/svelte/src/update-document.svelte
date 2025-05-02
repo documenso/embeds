@@ -1,8 +1,9 @@
 <script context="module" lang="ts">
-  export type EmbedCreateTemplateProps = {
+  export type EmbedUpdateDocumentProps = {
     className?: string;
     host?: string;
     presignToken: string;
+    documentId: number;
     externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
     css?: string | undefined;
@@ -19,9 +20,9 @@
     // prior to being added to the main props
 
     additionalProps?: Record<string, string | number | boolean> | undefined;
-    onTemplateCreated?: (data: {
+    onDocumentUpdated?: (data: {
       externalId: string;
-      templateId: number;
+      documentId: number;
     }) => void;
   };
 </script>
@@ -31,26 +32,27 @@
 
   import { CssVars } from "./css-vars";
 
-  export let host: EmbedCreateTemplateProps["host"] = undefined;
-  export let externalId: EmbedCreateTemplateProps["externalId"] = undefined;
-  export let features: EmbedCreateTemplateProps["features"] = undefined;
-  export let css: EmbedCreateTemplateProps["css"] = undefined;
-  export let cssVars: EmbedCreateTemplateProps["cssVars"] = undefined;
-  export let darkModeDisabled: EmbedCreateTemplateProps["darkModeDisabled"] =
+  export let host: EmbedUpdateDocumentProps["host"] = undefined;
+  export let presignToken: EmbedUpdateDocumentProps["presignToken"];
+  export let externalId: EmbedUpdateDocumentProps["externalId"] = undefined;
+  export let features: EmbedUpdateDocumentProps["features"] = undefined;
+  export let css: EmbedUpdateDocumentProps["css"] = undefined;
+  export let cssVars: EmbedUpdateDocumentProps["cssVars"] = undefined;
+  export let darkModeDisabled: EmbedUpdateDocumentProps["darkModeDisabled"] =
     undefined;
-  export let additionalProps: EmbedCreateTemplateProps["additionalProps"] =
+  export let additionalProps: EmbedUpdateDocumentProps["additionalProps"] =
     undefined;
-  export let presignToken: EmbedCreateTemplateProps["presignToken"];
-  export let onTemplateCreated: EmbedCreateTemplateProps["onTemplateCreated"] =
+  export let documentId: EmbedUpdateDocumentProps["documentId"];
+  export let onDocumentUpdated: EmbedUpdateDocumentProps["onDocumentUpdated"] =
     undefined;
-  export let className: EmbedCreateTemplateProps["className"] = undefined;
+  export let className: EmbedUpdateDocumentProps["className"] = undefined;
 
   function handleMessage(event: MessageEvent) {
     if (__iframe?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-created":
-          onTemplateCreated?.({
-            templateId: event.data.templateId,
+        case "document-updated":
+          onDocumentUpdated?.({
+            documentId: event.data.documentId,
             externalId: event.data.externalId,
           });
           break;
@@ -62,6 +64,7 @@
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
+          token: presignToken,
           externalId: externalId,
           features: features,
           css: css,
@@ -71,7 +74,10 @@
         })
       )
     );
-    const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+    const srcUrl = new URL(
+      `/embed/v1/authoring/document/update/${documentId}`,
+      appHost
+    );
     srcUrl.searchParams.set("token", presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();

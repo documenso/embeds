@@ -7,10 +7,11 @@ import { computed, onMounted, onUnmounted } from "vue";
 
 import { CssVars } from "./css-vars";
 
-export type EmbedCreateDocumentProps = {
+export type EmbedUpdateTemplateProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  templateId: number;
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
@@ -27,13 +28,13 @@ export type EmbedCreateDocumentProps = {
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
-  onDocumentCreated?: (data: {
+  onTemplateUpdated?: (data: {
     externalId: string;
-    documentId: number;
+    templateId: number;
   }) => void;
 };
 
-const props = defineProps<EmbedCreateDocumentProps>();
+const props = defineProps<EmbedUpdateTemplateProps>();
 
 const __iframe = ref<HTMLIFrameElement>();
 
@@ -57,7 +58,10 @@ const src = computed(() => {
       })
     )
   );
-  const srcUrl = new URL(`/embed/v1/authoring/document/create`, appHost);
+  const srcUrl = new URL(
+    `/embed/v1/authoring/template/update/${props.templateId}`,
+    appHost
+  );
   srcUrl.searchParams.set("token", props.presignToken);
   srcUrl.hash = encodedOptions;
   return srcUrl.toString();
@@ -66,9 +70,9 @@ const src = computed(() => {
 function handleMessage(event: MessageEvent) {
   if (__iframe.value?.contentWindow === event.source) {
     switch (event.data.type) {
-      case "document-created":
-        props.onDocumentCreated?.({
-          documentId: event.data.documentId,
+      case "template-updated":
+        props.onTemplateUpdated?.({
+          templateId: event.data.templateId,
           externalId: event.data.externalId,
         });
         break;

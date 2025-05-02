@@ -36,7 +36,6 @@ function EmbedCreateDocument(props: EmbedCreateDocumentProps) {
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
-          token: props.presignToken,
           externalId: props.externalId,
           features: props.features,
           css: props.css,
@@ -47,7 +46,9 @@ function EmbedCreateDocument(props: EmbedCreateDocumentProps) {
       )
     );
     const srcUrl = new URL(`/embed/v1/authoring/document/create`, appHost);
-    return `${srcUrl}#${encodedOptions}`;
+    srcUrl.searchParams.set("token", props.presignToken);
+    srcUrl.hash = encodedOptions;
+    return srcUrl.toString();
   }
 
   function handleMessage(event: MessageEvent) {

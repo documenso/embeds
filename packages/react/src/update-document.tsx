@@ -1,11 +1,12 @@
-/** @jsx h */
-import { h, Fragment } from "preact";
-import { useRef, useEffect } from "preact/hooks";
+"use client";
+import * as React from "react";
+import { useRef, useEffect } from "react";
 
-export type EmbedCreateTemplateProps = {
+export type EmbedUpdateDocumentProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  documentId: number;
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
@@ -22,20 +23,21 @@ export type EmbedCreateTemplateProps = {
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
-  onTemplateCreated?: (data: {
+  onDocumentUpdated?: (data: {
     externalId: string;
-    templateId: number;
+    documentId: number;
   }) => void;
 };
 import { CssVars } from "./css-vars";
 
-function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
+function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
   const __iframe = useRef<HTMLIFrameElement>(null);
   function src() {
     const appHost = props.host || "https://app.documenso.com";
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
+          token: props.presignToken,
           externalId: props.externalId,
           features: props.features,
           css: props.css,
@@ -45,7 +47,10 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
         })
       )
     );
-    const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+    const srcUrl = new URL(
+      `/embed/v1/authoring/document/update/${props.documentId}`,
+      appHost
+    );
     srcUrl.searchParams.set("token", props.presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
@@ -54,9 +59,9 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
   function handleMessage(event: MessageEvent) {
     if (__iframe.current?.contentWindow === event.source) {
       switch (event.data.type) {
-        case "template-created":
-          props.onTemplateCreated?.({
-            templateId: event.data.templateId,
+        case "document-updated":
+          props.onDocumentUpdated?.({
+            documentId: event.data.documentId,
             externalId: event.data.externalId,
           });
           break;
@@ -77,4 +82,4 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
   return <iframe ref={__iframe} className={props.className} src={src()} />;
 }
 
-export default EmbedCreateTemplate;
+export default EmbedUpdateDocument;

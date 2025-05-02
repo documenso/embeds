@@ -2,10 +2,11 @@ import { onMount, onUnMount, useRef, useStore } from '@builder.io/mitosis';
 
 import { CssVars } from './css-vars';
 
-export type EmbedCreateTemplateProps = {
+export type EmbedUpdateDocumentProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  documentId: number;
   externalId?: string;
 
   // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
@@ -27,10 +28,10 @@ export type EmbedCreateTemplateProps = {
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
 
-  onTemplateCreated?: (data: { externalId: string; templateId: number }) => void;
+  onDocumentUpdated?: (data: { externalId: string; documentId: number }) => void;
 };
 
-export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
+export default function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
   const __iframe = useRef<HTMLIFrameElement>(null);
 
   const state = useStore({
@@ -40,6 +41,8 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
       const encodedOptions = btoa(
         encodeURIComponent(
           JSON.stringify({
+            token: props.presignToken,
+
             externalId: props.externalId,
             features: props.features,
 
@@ -51,7 +54,7 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
         ),
       );
 
-      const srcUrl = new URL(`/embed/v1/authoring/template/create`, appHost);
+      const srcUrl = new URL(`/embed/v1/authoring/document/update/${props.documentId}`, appHost);
 
       srcUrl.searchParams.set('token', props.presignToken);
       srcUrl.hash = encodedOptions;
@@ -62,9 +65,9 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
     handleMessage(event: MessageEvent) {
       if (__iframe?.contentWindow === event.source) {
         switch (event.data.type) {
-          case 'template-created':
-            props.onTemplateCreated?.({
-              templateId: event.data.templateId,
+          case 'document-updated':
+            props.onDocumentUpdated?.({
+              documentId: event.data.documentId,
               externalId: event.data.externalId,
             });
             break;

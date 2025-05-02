@@ -7,10 +7,11 @@ import { computed, onMounted, onUnmounted } from "vue";
 
 import { CssVars } from "./css-vars";
 
-export type EmbedCreateDocumentProps = {
+export type EmbedUpdateDocumentProps = {
   className?: string;
   host?: string;
   presignToken: string;
+  documentId: number;
   externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
 
   css?: string | undefined;
@@ -27,13 +28,13 @@ export type EmbedCreateDocumentProps = {
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
-  onDocumentCreated?: (data: {
+  onDocumentUpdated?: (data: {
     externalId: string;
     documentId: number;
   }) => void;
 };
 
-const props = defineProps<EmbedCreateDocumentProps>();
+const props = defineProps<EmbedUpdateDocumentProps>();
 
 const __iframe = ref<HTMLIFrameElement>();
 
@@ -48,6 +49,7 @@ const src = computed(() => {
   const encodedOptions = btoa(
     encodeURIComponent(
       JSON.stringify({
+        token: props.presignToken,
         externalId: props.externalId,
         features: props.features,
         css: props.css,
@@ -57,7 +59,10 @@ const src = computed(() => {
       })
     )
   );
-  const srcUrl = new URL(`/embed/v1/authoring/document/create`, appHost);
+  const srcUrl = new URL(
+    `/embed/v1/authoring/document/update/${props.documentId}`,
+    appHost
+  );
   srcUrl.searchParams.set("token", props.presignToken);
   srcUrl.hash = encodedOptions;
   return srcUrl.toString();
@@ -66,8 +71,8 @@ const src = computed(() => {
 function handleMessage(event: MessageEvent) {
   if (__iframe.value?.contentWindow === event.source) {
     switch (event.data.type) {
-      case "document-created":
-        props.onDocumentCreated?.({
+      case "document-updated":
+        props.onDocumentUpdated?.({
           documentId: event.data.documentId,
           externalId: event.data.externalId,
         });
