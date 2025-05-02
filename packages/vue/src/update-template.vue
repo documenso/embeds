@@ -59,7 +59,7 @@ const src = computed(() => {
     )
   );
   const srcUrl = new URL(
-    `/embed/v1/authoring/template/update/${props.templateId}`,
+    `/embed/v1/authoring/template/edit/${props.templateId}`,
     appHost
   );
   srcUrl.searchParams.set("token", props.presignToken);

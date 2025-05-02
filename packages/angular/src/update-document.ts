@@ -76,7 +76,7 @@ export default class EmbedUpdateDocument {
       )
     );
     const srcUrl = new URL(
-      `/embed/v1/authoring/document/update/${this.documentId}`,
+      `/embed/v1/authoring/document/edit/${this.documentId}`,
       appHost
     );
     srcUrl.searchParams.set("token", this.presignToken);

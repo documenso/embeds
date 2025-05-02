@@ -52,7 +52,7 @@ export default function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
         ),
       );
 
-      const srcUrl = new URL(`/embed/v1/authoring/template/update/${props.templateId}`, appHost);
+      const srcUrl = new URL(`/embed/v1/authoring/template/edit/${props.templateId}`, appHost);
 
       srcUrl.searchParams.set('token', props.presignToken);
       srcUrl.hash = encodedOptions;

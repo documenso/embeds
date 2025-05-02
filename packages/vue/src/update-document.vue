@@ -60,7 +60,7 @@ const src = computed(() => {
     )
   );
   const srcUrl = new URL(
-    `/embed/v1/authoring/document/update/${props.documentId}`,
+    `/embed/v1/authoring/document/edit/${props.documentId}`,
     appHost
   );
   srcUrl.searchParams.set("token", props.presignToken);

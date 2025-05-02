@@ -75,7 +75,7 @@ export default class EmbedUpdateTemplate {
       )
     );
     const srcUrl = new URL(
-      `/embed/v1/authoring/template/update/${this.templateId}`,
+      `/embed/v1/authoring/template/edit/${this.templateId}`,
       appHost
     );
     srcUrl.searchParams.set("token", this.presignToken);

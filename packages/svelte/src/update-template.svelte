@@ -74,7 +74,7 @@
       )
     );
     const srcUrl = new URL(
-      `/embed/v1/authoring/template/update/${templateId}`,
+      `/embed/v1/authoring/template/edit/${templateId}`,
       appHost
     );
     srcUrl.searchParams.set("token", presignToken);

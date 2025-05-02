@@ -54,7 +54,7 @@ export default function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
         ),
       );
 
-      const srcUrl = new URL(`/embed/v1/authoring/document/update/${props.documentId}`, appHost);
+      const srcUrl = new URL(`/embed/v1/authoring/document/edit/${props.documentId}`, appHost);
 
       srcUrl.searchParams.set('token', props.presignToken);
       srcUrl.hash = encodedOptions;
