@@ -1,6 +1,6 @@
 {
   "name": "@documenso/embed-webcomponent",
-  "version": "0.2.1-rc.2",
+  "version": "0.2.1",
   "license": "MIT",
   "files": [
     "dist"
