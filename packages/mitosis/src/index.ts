@@ -4,3 +4,4 @@ export { default as unstable_EmbedCreateDocument } from './create-document.lite'
 export { default as unstable_EmbedCreateTemplate } from './create-template.lite';
 export { default as unstable_EmbedUpdateDocument } from './update-document.lite';
 export { default as unstable_EmbedUpdateTemplate } from './update-template.lite';
+export { default as unstable_EmbedMultiSignDocument } from './multisign-document.lite';
