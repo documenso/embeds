@@ -33,6 +33,7 @@
   import { CssVars } from "./css-vars";
 
   export let host: EmbedUpdateTemplateProps["host"] = undefined;
+  export let presignToken: EmbedUpdateTemplateProps["presignToken"];
   export let externalId: EmbedUpdateTemplateProps["externalId"] = undefined;
   export let features: EmbedUpdateTemplateProps["features"] = undefined;
   export let css: EmbedUpdateTemplateProps["css"] = undefined;
@@ -42,7 +43,6 @@
   export let additionalProps: EmbedUpdateTemplateProps["additionalProps"] =
     undefined;
   export let templateId: EmbedUpdateTemplateProps["templateId"];
-  export let presignToken: EmbedUpdateTemplateProps["presignToken"];
   export let onTemplateUpdated: EmbedUpdateTemplateProps["onTemplateUpdated"] =
     undefined;
   export let className: EmbedUpdateTemplateProps["className"] = undefined;
@@ -64,6 +64,7 @@
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
+          token: presignToken,
           externalId: externalId,
           features: features,
           css: css,

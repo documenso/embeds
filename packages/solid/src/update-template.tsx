@@ -35,6 +35,7 @@ function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
+          token: props.presignToken,
           externalId: props.externalId,
           features: props.features,
           css: props.css,
