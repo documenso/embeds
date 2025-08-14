@@ -47,13 +47,13 @@ import { CssVars } from "./css-vars";
 })
 export default class EmbedCreateDocument {
   @Input() host!: EmbedCreateDocumentProps["host"];
+  @Input() presignToken!: EmbedCreateDocumentProps["presignToken"];
   @Input() externalId!: EmbedCreateDocumentProps["externalId"];
   @Input() features!: EmbedCreateDocumentProps["features"];
   @Input() css!: EmbedCreateDocumentProps["css"];
   @Input() cssVars!: EmbedCreateDocumentProps["cssVars"];
   @Input() darkModeDisabled!: EmbedCreateDocumentProps["darkModeDisabled"];
   @Input() additionalProps!: EmbedCreateDocumentProps["additionalProps"];
-  @Input() presignToken!: EmbedCreateDocumentProps["presignToken"];
   @Input() onDocumentCreated!: EmbedCreateDocumentProps["onDocumentCreated"];
   @Input() className!: EmbedCreateDocumentProps["className"];
 
@@ -64,6 +64,7 @@ export default class EmbedCreateDocument {
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
+          token: this.presignToken,
           externalId: this.externalId,
           features: this.features,
           css: this.css,

@@ -47,6 +47,7 @@ import { CssVars } from "./css-vars";
 })
 export default class EmbedUpdateTemplate {
   @Input() host!: EmbedUpdateTemplateProps["host"];
+  @Input() presignToken!: EmbedUpdateTemplateProps["presignToken"];
   @Input() externalId!: EmbedUpdateTemplateProps["externalId"];
   @Input() features!: EmbedUpdateTemplateProps["features"];
   @Input() css!: EmbedUpdateTemplateProps["css"];
@@ -54,7 +55,6 @@ export default class EmbedUpdateTemplate {
   @Input() darkModeDisabled!: EmbedUpdateTemplateProps["darkModeDisabled"];
   @Input() additionalProps!: EmbedUpdateTemplateProps["additionalProps"];
   @Input() templateId!: EmbedUpdateTemplateProps["templateId"];
-  @Input() presignToken!: EmbedUpdateTemplateProps["presignToken"];
   @Input() onTemplateUpdated!: EmbedUpdateTemplateProps["onTemplateUpdated"];
   @Input() className!: EmbedUpdateTemplateProps["className"];
 
@@ -65,6 +65,7 @@ export default class EmbedUpdateTemplate {
     const encodedOptions = btoa(
       encodeURIComponent(
         JSON.stringify({
+          token: this.presignToken,
           externalId: this.externalId,
           features: this.features,
           css: this.css,
