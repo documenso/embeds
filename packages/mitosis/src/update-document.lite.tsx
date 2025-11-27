@@ -24,6 +24,8 @@ export type EmbedUpdateDocumentProps = {
     allowConfigureCommunication?: boolean;
   };
 
+  onlyEditFields?: boolean | undefined;
+
   // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -49,6 +51,7 @@ export default function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            onlyEditFields: props.onlyEditFields,
             ...props.additionalProps,
           }),
         ),

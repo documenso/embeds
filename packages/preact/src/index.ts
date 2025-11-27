@@ -1,5 +1,9 @@
 export { default as EmbedDirectTemplate } from './direct-template';
 export { default as EmbedSignDocument } from './sign-document';
+export { default as EmbedCreateDocumentV1 } from './create-document';
+export { default as EmbedCreateTemplateV1 } from './create-template';
+export { default as EmbedUpdateDocumentV1 } from './update-document';
+export { default as EmbedUpdateTemplateV1 } from './update-template';
 export { default as unstable_EmbedCreateDocument } from './create-document';
 export { default as unstable_EmbedCreateTemplate } from './create-template';
 export { default as unstable_EmbedUpdateDocument } from './update-document';

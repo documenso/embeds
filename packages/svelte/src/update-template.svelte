@@ -16,7 +16,8 @@
       allowConfigureTimezone?: boolean;
       allowConfigureRedirectUrl?: boolean;
       allowConfigureCommunication?: boolean;
-    }; // Additional props to be passed to the iframe, used for testing out features
+    };
+    onlyEditFields?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
     // prior to being added to the main props
 
     additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -38,6 +39,8 @@
   export let css: EmbedUpdateTemplateProps["css"] = undefined;
   export let cssVars: EmbedUpdateTemplateProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedUpdateTemplateProps["darkModeDisabled"] =
+    undefined;
+  export let onlyEditFields: EmbedUpdateTemplateProps["onlyEditFields"] =
     undefined;
   export let additionalProps: EmbedUpdateTemplateProps["additionalProps"] =
     undefined;
@@ -69,6 +72,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          onlyEditFields: onlyEditFields,
           ...additionalProps,
         })
       )

@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 cp ./util/trusted-resource-url-pipe.ts ./src/trusted-resource-url-pipe.ts
 
 # Array of files to process
-files=('./src/direct-template.ts' './src/sign-document.ts' './src/create-document.ts' './src/create-template.ts')
+files=('./src/direct-template.ts' './src/sign-document.ts' './src/create-document.ts' './src/create-template.ts' './src/update-document.ts' './src/update-template.ts')
 
 # Detect OS type
 OS_TYPE=$(uname)

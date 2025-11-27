@@ -19,7 +19,8 @@ export type EmbedUpdateDocumentProps = {
     allowConfigureTimezone?: boolean;
     allowConfigureRedirectUrl?: boolean;
     allowConfigureCommunication?: boolean;
-  }; // Additional props to be passed to the iframe, used for testing out features
+  };
+  onlyEditFields?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -43,6 +44,7 @@ function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
           css: props.css,
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
+          onlyEditFields: props.onlyEditFields,
           ...props.additionalProps,
         })
       )

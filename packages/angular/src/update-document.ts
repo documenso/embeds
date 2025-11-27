@@ -1,3 +1,4 @@
+import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
@@ -18,7 +19,8 @@ export type EmbedUpdateDocumentProps = {
     allowConfigureTimezone?: boolean;
     allowConfigureRedirectUrl?: boolean;
     allowConfigureCommunication?: boolean;
-  }; // Additional props to be passed to the iframe, used for testing out features
+  };
+  onlyEditFields?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
 
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -33,7 +35,7 @@ import { CssVars } from "./css-vars";
 @Component({
   selector: "embed-update-document, EmbedUpdateDocument",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src"></iframe>
+    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
   `,
   styles: [
     `
@@ -43,7 +45,7 @@ import { CssVars } from "./css-vars";
     `,
   ],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TrustedResourceUrlPipe],
 })
 export default class EmbedUpdateDocument {
   @Input() host!: EmbedUpdateDocumentProps["host"];
@@ -53,6 +55,7 @@ export default class EmbedUpdateDocument {
   @Input() css!: EmbedUpdateDocumentProps["css"];
   @Input() cssVars!: EmbedUpdateDocumentProps["cssVars"];
   @Input() darkModeDisabled!: EmbedUpdateDocumentProps["darkModeDisabled"];
+  @Input() onlyEditFields!: EmbedUpdateDocumentProps["onlyEditFields"];
   @Input() additionalProps!: EmbedUpdateDocumentProps["additionalProps"];
   @Input() documentId!: EmbedUpdateDocumentProps["documentId"];
   @Input() onDocumentUpdated!: EmbedUpdateDocumentProps["onDocumentUpdated"];
@@ -71,6 +74,7 @@ export default class EmbedUpdateDocument {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          onlyEditFields: this.onlyEditFields,
           ...this.additionalProps,
         })
       )
