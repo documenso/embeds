@@ -40,8 +40,8 @@
   },
   "devDependencies": {
     "@documenso/embed": "*",
-    "@types/preact-custom-element": "^4.0.4",
+    "@types/preact-custom-element": "^4.0.0",
     "vite": "^7.0.0",
-    "vite-plugin-dts": "^4.1.0"
+    "vite-plugin-dts": "^4.0.0"
   }
 }

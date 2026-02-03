@@ -10,6 +10,7 @@ coverage
 
 #angular
 .angular
+packages/angular/test-app
 
 # next.js
 .next/

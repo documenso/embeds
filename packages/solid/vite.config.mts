@@ -12,7 +12,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['solid-js'],
+      external: ['solid-js', 'solid-js/web'],
     },
   },
   plugins: [

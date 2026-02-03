@@ -1,5 +1,6 @@
 import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
+
 import { CommonModule } from "@angular/common";
 
 export type EmbedUpdateTemplateProps = {
@@ -33,7 +34,7 @@ export type EmbedUpdateTemplateProps = {
 import { CssVars } from "./css-vars";
 
 @Component({
-  selector: "embed-update-template, EmbedUpdateTemplate",
+  selector: "embed-update-template",
   template: `
     <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
   `,
@@ -87,7 +88,7 @@ export default class EmbedUpdateTemplate {
     return srcUrl.toString();
   }
   handleMessage(event: MessageEvent) {
-    if (this.__iframe.nativeElement?.contentWindow === event.source) {
+    if (this.__iframe?.nativeElement?.contentWindow === event.source) {
       switch (event.data.type) {
         case "template-updated":
           this.onTemplateUpdated?.({

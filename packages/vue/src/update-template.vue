@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import { CssVars } from "./css-vars";
 
@@ -37,7 +37,7 @@ export type EmbedUpdateTemplateProps = {
 
 const props = defineProps<EmbedUpdateTemplateProps>();
 
-const __iframe = ref<HTMLIFrameElement>();
+const __iframe = ref<HTMLIFrameElement>(null);
 
 onMounted(() => {
   window.addEventListener("message", handleMessage);
