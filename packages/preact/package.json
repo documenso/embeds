@@ -36,8 +36,8 @@
   },
   "devDependencies": {
     "@documenso/embed": "*",
-    "@preact/preset-vite": "^2.9.0",
+    "@preact/preset-vite": "^2.0.0",
     "vite": "^7.0.0",
-    "vite-plugin-dts": "^4.1.0"
+    "vite-plugin-dts": "^4.0.0"
   }
 }
