@@ -2,27 +2,6 @@
   "name": "@documenso/embed-angular",
   "version": "0.4.0",
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.cjs",
-  "module": "./dist/esm2022/index.mjs",
-  "exports": {
-    "./package.json": {
-      "default": "./package.json"
-    },
-    ".": {
-      "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/esm2022/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.cjs"
-      }
-    }
-  },
   "publishConfig": {
     "access": "public"
   },
@@ -33,16 +12,23 @@
     "publint": "publint"
   },
   "peerDependencies": {
-    "@angular/common": "^18.2.0",
-    "@angular/core": "^18.2.0",
-    "@angular/platform-browser": "^18.2.0"
+    "@angular/common": "^18.2.0 || ^19.0.0",
+    "@angular/core": "^18.2.0 || ^19.0.0",
+    "@angular/platform-browser": "^18.2.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.2.4",
-    "@angular/cli": "^18.2.4",
+    "@angular-devkit/build-angular": "^19.0.0",
+    "@angular/cli": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/compiler-cli": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
     "@documenso/embed": "*",
-    "ng-packagr": "^18.2.0",
-    "rollup": "^4.20.0",
-    "tslib": "^2.3.0"
+    "ng-packagr": "^19.0.0",
+    "rollup": "^4.0.0",
+    "tslib": "^2.0.0",
+    "rxjs": "^7.0.0",
+    "zone.js": "^0.15.0"
   }
 }

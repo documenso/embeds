@@ -8,7 +8,7 @@ cd "$(dirname "$0")/.."
 cp ./util/trusted-resource-url-pipe.ts ./src/trusted-resource-url-pipe.ts
 
 # Array of files to process
-files=('./src/direct-template.ts' './src/sign-document.ts' './src/create-document.ts' './src/create-template.ts' './src/update-document.ts' './src/update-template.ts')
+files=('./src/direct-template.ts' './src/sign-document.ts' './src/create-document.ts' './src/create-template.ts' './src/update-document.ts' './src/update-template.ts' './src/multisign-document.ts')
 
 # Detect OS type
 OS_TYPE=$(uname)
@@ -17,17 +17,26 @@ OS_TYPE=$(uname)
 for file in "${files[@]}"
 do
     if [ "$OS_TYPE" = "Darwin" ]; then
-        # macOS (BSD) sed commands
-        sed -i '' 's/<iframe #__iframe \[class\]="className" \[attr\.src\]="src"><\/iframe>/<iframe #__iframe \[class\]="className" \[attr\.src\]="src | trustedResourceUrl"><\/iframe>/' "$file"
-        sed -i '' 's/imports: \[CommonModule\],/imports: \[CommonModule, TrustedResourceUrlPipe\],/' "$file"
-        sed -i '' '1i\
+        # macOS (BSD) sed commands - only apply if not already present
+        # Add pipe to iframe src (idempotent - check if not already present)
+        grep -q 'src | trustedResourceUrl' "$file" || \
+            sed -i '' 's/<iframe #__iframe \[class\]="className" \[attr\.src\]="src"><\/iframe>/<iframe #__iframe \[class\]="className" \[attr\.src\]="src | trustedResourceUrl"><\/iframe>/' "$file"
+        # Add TrustedResourceUrlPipe to imports array (idempotent)
+        grep -q 'TrustedResourceUrlPipe\]' "$file" || \
+            sed -i '' 's/imports: \[CommonModule\],/imports: \[CommonModule, TrustedResourceUrlPipe\],/' "$file"
+        # Add import statement at top (idempotent - check if not already present)
+        grep -q 'import { TrustedResourceUrlPipe }' "$file" || \
+            sed -i '' '1i\
 import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 ' "$file"
     else
-        # GNU sed commands (Linux and others)
-        sed -i 's/<iframe #__iframe \[class\]="className" \[attr\.src\]="src"><\/iframe>/<iframe #__iframe \[class\]="className" \[attr\.src\]="src | trustedResourceUrl"><\/iframe>/' "$file"
-        sed -i 's/imports: \[CommonModule\],/imports: \[CommonModule, TrustedResourceUrlPipe\],/' "$file"
-        sed -i '1i\
+        # GNU sed commands (Linux and others) - only apply if not already present
+        grep -q 'src | trustedResourceUrl' "$file" || \
+            sed -i 's/<iframe #__iframe \[class\]="className" \[attr\.src\]="src"><\/iframe>/<iframe #__iframe \[class\]="className" \[attr\.src\]="src | trustedResourceUrl"><\/iframe>/' "$file"
+        grep -q 'TrustedResourceUrlPipe\]' "$file" || \
+            sed -i 's/imports: \[CommonModule\],/imports: \[CommonModule, TrustedResourceUrlPipe\],/' "$file"
+        grep -q 'import { TrustedResourceUrlPipe }' "$file" || \
+            sed -i '1i\
 import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 ' "$file"
     fi
