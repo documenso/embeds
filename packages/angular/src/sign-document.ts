@@ -1,5 +1,6 @@
 import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
+
 import { CommonModule } from "@angular/common";
 
 export type EmbedSignDocumentProps = {
@@ -34,7 +35,7 @@ export type EmbedSignDocumentProps = {
 import { CssVars } from "./css-vars";
 
 @Component({
-  selector: "embed-sign-document, EmbedSignDocument",
+  selector: "embed-sign-document",
   template: `
     <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
   `,
@@ -86,7 +87,7 @@ export default class EmbedSignDocument {
     return `${srcUrl}#${encodedOptions}`;
   }
   handleMessage(event: MessageEvent) {
-    if (this.__iframe.nativeElement?.contentWindow === event.source) {
+    if (this.__iframe?.nativeElement?.contentWindow === event.source) {
       switch (event.data.action) {
         case "document-ready":
           this.onDocumentReady?.();

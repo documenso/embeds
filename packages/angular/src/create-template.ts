@@ -1,5 +1,6 @@
 import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
+
 import { CommonModule } from "@angular/common";
 
 export type EmbedCreateTemplateProps = {
@@ -31,7 +32,7 @@ export type EmbedCreateTemplateProps = {
 import { CssVars } from "./css-vars";
 
 @Component({
-  selector: "embed-create-template, EmbedCreateTemplate",
+  selector: "embed-create-template",
   template: `
     <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
   `,
@@ -79,7 +80,7 @@ export default class EmbedCreateTemplate {
     return srcUrl.toString();
   }
   handleMessage(event: MessageEvent) {
-    if (this.__iframe.nativeElement?.contentWindow === event.source) {
+    if (this.__iframe?.nativeElement?.contentWindow === event.source) {
       switch (event.data.type) {
         case "template-created":
           this.onTemplateCreated?.({

@@ -1,4 +1,6 @@
+import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
+
 import { CommonModule } from "@angular/common";
 
 export type EmbedMultiSignDocumentProps = {
@@ -42,9 +44,9 @@ export type EmbedMultiSignDocumentProps = {
 import { CssVars } from "./css-vars";
 
 @Component({
-  selector: "embed-multi-sign-document, EmbedMultiSignDocument",
+  selector: "embed-multi-sign-document",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src"></iframe>
+    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
   `,
   styles: [
     `
@@ -54,7 +56,7 @@ import { CssVars } from "./css-vars";
     `,
   ],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TrustedResourceUrlPipe],
 })
 export default class EmbedMultiSignDocument {
   @Input() host!: EmbedMultiSignDocumentProps["host"];
@@ -103,7 +105,7 @@ export default class EmbedMultiSignDocument {
     return `${srcUrl}#${encodedOptions}`;
   }
   handleMessage(event: MessageEvent) {
-    if (this.__iframe.nativeElement?.contentWindow === event.source) {
+    if (this.__iframe?.nativeElement?.contentWindow === event.source) {
       switch (event.data.action) {
         case "document-ready":
           this.onDocumentReady?.();
