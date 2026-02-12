@@ -2,6 +2,27 @@
   "name": "@documenso/embed-angular",
   "version": "0.5.0",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/fesm2022/documenso-embed-angular.mjs",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/fesm2022/documenso-embed-angular.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
