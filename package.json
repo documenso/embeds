@@ -15,7 +15,9 @@
   "overrides": {
     "@angular/compiler": "^19.0.0",
     "ajv": "^8.0.0",
-    "pacote": "^21.1.0"
+    "pacote": "^21.1.0",
+    "serialize-javascript": "^7.0.4",
+    "minimatch": "^10.2.3"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.4",
