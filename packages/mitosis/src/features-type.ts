@@ -22,16 +22,17 @@ export type EnvelopeEditorSettings = {
     allowConfigureRedirectUrl: boolean;
     allowConfigureDistribution: boolean;
     allowConfigureExpirationPeriod: boolean;
+    allowConfigureEmailSender: boolean;
+    allowConfigureEmailReplyTo: boolean;
   } | null;
 
   actions: {
     allowAttachments: boolean;
-    allowDistributing: boolean;
-    allowDirectLink: boolean;
-    allowDuplication: boolean;
-    allowDownloadPDF: boolean;
-    allowDeletion: boolean;
-    allowReturnToPreviousPage: boolean;
+    // allowDistributing: boolean; // These are not available for embeds.
+    // allowDirectLink: boolean; // These are not available for embeds.
+    // allowDuplication: boolean; // These are not available for embeds.
+    // allowDownloadPDF: boolean; // These are not available for embeds.
+    // allowDeletion: boolean; // These are not available for embeds.
   };
 
   /** If null, no adjustments to envelope items will be allowed. */
@@ -44,7 +45,7 @@ export type EnvelopeEditorSettings = {
 
   /** If null, recipients will not be configurable at all. */
   recipients: {
-    allowAIDetection: boolean;
+    // allowAIDetection: boolean; // These aren't available for embeds.
     allowConfigureSigningOrder: boolean;
     allowConfigureDictateNextSigner: boolean;
     allowApproverRole: boolean;
@@ -53,7 +54,7 @@ export type EnvelopeEditorSettings = {
     allowAssistantRole: boolean;
   } | null;
 
-  fields: {
-    allowAIDetection: boolean;
-  };
+  // fields: {
+  //   allowAIDetection: boolean; // These aren't available for embeds.
+  // };
 };

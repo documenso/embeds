@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { DeepPartial, EnvelopeEditorSettings } from '@documenso/embed/src/features-type';
+import type { EnvelopeEditorSettings } from '@documenso/embed/src/features-type';
 
 /**
  * Recursively maps a features object to the same structure with string (description) at every leaf.
@@ -36,10 +36,11 @@ export const DEFAULT_ENVELOPE_FEATURES = {
     allowConfigureRedirectUrl: true,
     allowConfigureDistribution: true,
     allowConfigureExpirationPeriod: true,
+    allowConfigureEmailSender: true,
+    allowConfigureEmailReplyTo: true,
   },
   actions: {
     allowAttachments: true,
-    allowReturnToPreviousPage: true,
   },
   envelopeItems: {
     allowConfigureTitle: true,
@@ -48,7 +49,6 @@ export const DEFAULT_ENVELOPE_FEATURES = {
     allowDelete: true,
   },
   recipients: {
-    allowAIDetection: false,
     allowConfigureSigningOrder: true,
     allowConfigureDictateNextSigner: true,
     allowApproverRole: true,
@@ -56,10 +56,10 @@ export const DEFAULT_ENVELOPE_FEATURES = {
     allowCCerRole: true,
     allowAssistantRole: true,
   },
-  fields: {
-    allowAIDetection: false,
-  },
-} satisfies DeepPartial<EnvelopeEditorSettings>;
+  // fields: {
+  //   allowAIDetection: false,
+  // },
+} satisfies EnvelopeEditorSettings;
 
 export const DEFAULT_ENVELOPE_FEATURES_DESCRIPTIONS: EnvelopeEmbedFeaturesDescriptions = {
   general: {
@@ -77,15 +77,11 @@ export const DEFAULT_ENVELOPE_FEATURES_DESCRIPTIONS: EnvelopeEmbedFeaturesDescri
     allowConfigureRedirectUrl: 'Allow users to set redirect URL after completion',
     allowConfigureDistribution: 'Allow users to configure distribution method',
     allowConfigureExpirationPeriod: 'Allow users to configure envelope expiration period',
+    allowConfigureEmailSender: 'Allow users to configure email sender',
+    allowConfigureEmailReplyTo: 'Allow users to configure email reply to',
   },
   actions: {
     allowAttachments: 'Allow adding attachments to the envelope',
-    allowReturnToPreviousPage: 'Allow returning to the previous step',
-    allowDistributing: 'N/A', // These aren't available for embeds.
-    allowDirectLink: 'N/A', // These aren't available for embeds.
-    allowDuplication: 'N/A', // These aren't available for embeds.
-    allowDownloadPDF: 'N/A', // These aren't available for embeds.
-    allowDeletion: 'N/A', // These aren't available for embeds.
   },
   envelopeItems: {
     allowConfigureTitle: 'Allow changing envelope item titles',
@@ -94,7 +90,6 @@ export const DEFAULT_ENVELOPE_FEATURES_DESCRIPTIONS: EnvelopeEmbedFeaturesDescri
     allowDelete: 'Allow removing envelope items',
   },
   recipients: {
-    allowAIDetection: 'Allow AI-assisted recipient detection',
     allowConfigureSigningOrder: 'Allow configuring signing order',
     allowConfigureDictateNextSigner: 'Allow configuring who dictates the next signer',
     allowApproverRole: 'Allow adding approver recipients',
@@ -102,9 +97,9 @@ export const DEFAULT_ENVELOPE_FEATURES_DESCRIPTIONS: EnvelopeEmbedFeaturesDescri
     allowCCerRole: 'Allow adding CC recipients',
     allowAssistantRole: 'Allow adding assistant recipients',
   },
-  fields: {
-    allowAIDetection: 'Allow AI-assisted field detection',
-  },
+  // fields: {
+  //   allowAIDetection: 'N/A', // These aren't available for embeds.
+  // },
 };
 
 /** Zod schema for the features form, mirrors EnvelopeEmbedFeatures. */
@@ -125,11 +120,12 @@ export const EnvelopeFeaturesSchema = z.object({
       allowConfigureRedirectUrl: z.boolean(),
       allowConfigureDistribution: z.boolean(),
       allowConfigureExpirationPeriod: z.boolean(),
+      allowConfigureEmailSender: z.boolean(),
+      allowConfigureEmailReplyTo: z.boolean(),
     })
     .nullable(),
   actions: z.object({
     allowAttachments: z.boolean(),
-    allowReturnToPreviousPage: z.boolean(),
   }),
   envelopeItems: z
     .object({
@@ -141,7 +137,7 @@ export const EnvelopeFeaturesSchema = z.object({
     .nullable(),
   recipients: z
     .object({
-      allowAIDetection: z.boolean(),
+      // allowAIDetection: z.boolean(),
       allowConfigureSigningOrder: z.boolean(),
       allowConfigureDictateNextSigner: z.boolean(),
       allowApproverRole: z.boolean(),
@@ -150,9 +146,9 @@ export const EnvelopeFeaturesSchema = z.object({
       allowAssistantRole: z.boolean(),
     })
     .nullable(),
-  fields: z.object({
-    allowAIDetection: z.boolean(),
-  }),
+  // fields: z.object({
+  //   allowAIDetection: z.boolean(),
+  // }),
 });
 
 export type TEnvelopeFeatures = z.infer<typeof EnvelopeFeaturesSchema>;
