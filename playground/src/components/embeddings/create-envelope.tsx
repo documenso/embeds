@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -14,13 +13,23 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { unstable_EmbedCreateDocument as EmbedCreateDocument } from '@documenso/embed-react';
+import { unstable_EmbedCreateEnvelope as EmbedCreateEnvelope } from '@documenso/embed-react';
+
+import { DEFAULT_ENVELOPE_FEATURES, EnvelopeFeaturesSchema } from './envelope-features';
+import { EnvelopeFeaturesFormFields } from './envelope-features-form-fields';
 
 const formSchema = z
   .object({
@@ -28,12 +37,8 @@ const formSchema = z
     apiKey: z.string().optional(),
     presignToken: z.string().optional(),
     externalId: z.string().optional(),
-    allowConfigureSignatureTypes: z.boolean().optional(),
-    allowConfigureLanguage: z.boolean().optional(),
-    allowConfigureDateFormat: z.boolean().optional(),
-    allowConfigureTimezone: z.boolean().optional(),
-    allowConfigureRedirectUrl: z.boolean().optional(),
-    allowConfigureCommunication: z.boolean().optional(),
+    type: z.enum(['DOCUMENT', 'TEMPLATE']),
+    features: EnvelopeFeaturesSchema,
     darkModeDisabled: z.boolean().optional(),
     css: z.string().optional(),
   })
@@ -49,7 +54,7 @@ const formSchema = z
 
 type FormData = z.infer<typeof formSchema>;
 
-export default function CreateDocumentEmbedding() {
+export default function CreateEnvelopeEmbedding() {
   const host = import.meta.env.VITE_EMBED_HOST || 'https://app.documenso.com';
   const [showEmbed, setShowEmbed] = useState(false);
   const [embedConfig, setEmbedConfig] = useState<
@@ -65,19 +70,15 @@ export default function CreateDocumentEmbedding() {
       apiKey: '',
       presignToken: '',
       externalId: '',
-      allowConfigureSignatureTypes: true,
-      allowConfigureLanguage: true,
-      allowConfigureDateFormat: true,
-      allowConfigureTimezone: true,
-      allowConfigureRedirectUrl: true,
-      allowConfigureCommunication: true,
+      type: 'DOCUMENT',
+      features: DEFAULT_ENVELOPE_FEATURES,
       darkModeDisabled: false,
       css: '',
     },
   });
 
   const generatePresignToken = async (apiKey: string) => {
-    const response = await fetch(`${host}/api/v2-beta/embedding/create-presign-token`, {
+    const response = await fetch(`${host}/api/v2/embedding/create-presign-token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({ expiresIn: 60 }),
@@ -103,9 +104,13 @@ export default function CreateDocumentEmbedding() {
         token = await generatePresignToken(data.apiKey);
       }
 
+      console.log({
+        test: data.features,
+      });
+
       setEmbedConfig({ ...data, presignToken: token });
       setShowEmbed(true);
-      console.log('Generating Create Document embedding');
+      console.log('Generating Create Envelope embedding');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate token');
       console.error('Error generating presign token:', err);
@@ -126,20 +131,13 @@ export default function CreateDocumentEmbedding() {
 
   return (
     <div className="space-y-6">
-      <Alert>
-        <AlertTitle>V1 Documents</AlertTitle>
-        <AlertDescription>
-          This creates V1 Documents. We recommend using V2 Envelopes for new integrations.
-        </AlertDescription>
-      </Alert>
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
             <CardHeader>
-              <CardTitle>Create Document Configurator</CardTitle>
+              <CardTitle>Create Envelope Configurator (V2)</CardTitle>
               <CardDescription>
-                Configure your document authoring embedding parameters
+                Configure your envelope authoring embedding parameters
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -207,6 +205,8 @@ export default function CreateDocumentEmbedding() {
                 />
               )}
 
+              <Separator />
+
               <FormField
                 control={form.control}
                 name="externalId"
@@ -220,7 +220,30 @@ export default function CreateDocumentEmbedding() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>Unique identifier for tracking this document</FormDescription>
+                    <FormDescription>Unique identifier for tracking this envelope</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Envelope Type</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select envelope type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="DOCUMENT">Document</SelectItem>
+                          <SelectItem value="TEMPLATE">Template</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormDescription>Select the type of envelope to create</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -228,111 +251,7 @@ export default function CreateDocumentEmbedding() {
 
               <Separator />
 
-              <div className="space-y-3">
-                <div className="text-sm font-medium">Feature Configuration</div>
-
-                <FormField
-                  control={form.control}
-                  name="allowConfigureSignatureTypes"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Allow Configure Signature Types</FormLabel>
-                        <FormDescription>
-                          Allow users to configure signature field types
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="allowConfigureLanguage"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Allow Configure Language</FormLabel>
-                        <FormDescription>
-                          Allow users to configure document language
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="allowConfigureDateFormat"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Allow Configure Date Format</FormLabel>
-                        <FormDescription>Allow users to configure date format</FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="allowConfigureTimezone"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Allow Configure Timezone</FormLabel>
-                        <FormDescription>Allow users to configure timezone</FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="allowConfigureRedirectUrl"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Allow Configure Redirect URL</FormLabel>
-                        <FormDescription>Allow users to set redirect URL</FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="allowConfigureCommunication"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>Allow Configure Communication</FormLabel>
-                        <FormDescription>
-                          Allow users to configure email notifications
-                        </FormDescription>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <EnvelopeFeaturesFormFields control={form.control} />
 
               <Separator />
 
@@ -401,28 +320,22 @@ export default function CreateDocumentEmbedding() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Create Document Embedding</CardTitle>
-          <CardDescription>Embedded authoring view will appear here</CardDescription>
+          <CardTitle>Create Envelope Embedding</CardTitle>
+          <CardDescription>Embedded envelope authoring view will appear here</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <div className="border-muted-foreground/25 m-6 flex min-h-[600px] items-center justify-center rounded-lg border-2 border-dashed">
             {showEmbed && embedConfig ? (
-              <EmbedCreateDocument
+              <EmbedCreateEnvelope
                 className="h-[800px] w-full"
                 host={host}
                 presignToken={embedConfig.presignToken}
                 externalId={embedConfig.externalId}
-                features={{
-                  allowConfigureSignatureTypes: embedConfig.allowConfigureSignatureTypes,
-                  allowConfigureLanguage: embedConfig.allowConfigureLanguage,
-                  allowConfigureDateFormat: embedConfig.allowConfigureDateFormat,
-                  allowConfigureTimezone: embedConfig.allowConfigureTimezone,
-                  allowConfigureRedirectUrl: embedConfig.allowConfigureRedirectUrl,
-                  allowConfigureCommunication: embedConfig.allowConfigureCommunication,
-                }}
+                type={embedConfig.type}
+                features={embedConfig.features}
                 darkModeDisabled={embedConfig.darkModeDisabled}
                 css={embedConfig.css}
-                onDocumentCreated={(data) => console.log('Document created:', data)}
+                onEnvelopeCreated={(data) => console.log('Envelope created:', data)}
               />
             ) : watchedValue ? (
               <div className="space-y-2 text-center">

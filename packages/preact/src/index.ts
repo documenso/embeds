@@ -4,8 +4,13 @@ export { default as EmbedCreateDocumentV1 } from './create-document';
 export { default as EmbedCreateTemplateV1 } from './create-template';
 export { default as EmbedUpdateDocumentV1 } from './update-document';
 export { default as EmbedUpdateTemplateV1 } from './update-template';
+export { default as EmbedCreateEnvelopeV2 } from './create-envelope';
+export { default as EmbedUpdateEnvelopeV2 } from './update-envelope';
+export type { EnvelopeEditorSettings } from './features-type';
 export { default as unstable_EmbedCreateDocument } from './create-document';
 export { default as unstable_EmbedCreateTemplate } from './create-template';
 export { default as unstable_EmbedUpdateDocument } from './update-document';
 export { default as unstable_EmbedUpdateTemplate } from './update-template';
+export { default as unstable_EmbedCreateEnvelope } from './create-envelope';
+export { default as unstable_EmbedUpdateEnvelope } from './update-envelope';
 export { default as unstable_EmbedMultiSignDocument } from './multisign-document'
