@@ -4,8 +4,13 @@ export { default as EmbedCreateDocumentV1 } from './create-document.svelte';
 export { default as EmbedCreateTemplateV1 } from './create-template.svelte';
 export { default as EmbedUpdateDocumentV1 } from './update-document.svelte';
 export { default as EmbedUpdateTemplateV1 } from './update-template.svelte';
+export { default as EmbedCreateEnvelopeV2 } from './create-envelope.svelte';
+export { default as EmbedUpdateEnvelopeV2 } from './update-envelope.svelte';
+export type { EnvelopeEditorSettings } from './features-type';
 export { default as unstable_EmbedCreateDocument } from './create-document.svelte';
 export { default as unstable_EmbedCreateTemplate } from './create-template.svelte';
 export { default as unstable_EmbedUpdateDocument } from './update-document.svelte';
 export { default as unstable_EmbedUpdateTemplate } from './update-template.svelte';
+export { default as unstable_EmbedCreateEnvelope } from './create-envelope.svelte';
+export { default as unstable_EmbedUpdateEnvelope } from './update-envelope.svelte';
 export { default as unstable_EmbedMultiSignDocument } from './multisign-document.svelte'

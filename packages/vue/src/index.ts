@@ -4,8 +4,13 @@ export { default as EmbedCreateDocumentV1 } from './create-document.vue';
 export { default as EmbedCreateTemplateV1 } from './create-template.vue';
 export { default as EmbedUpdateDocumentV1 } from './update-document.vue';
 export { default as EmbedUpdateTemplateV1 } from './update-template.vue';
+export { default as EmbedCreateEnvelopeV2 } from './create-envelope.vue';
+export { default as EmbedUpdateEnvelopeV2 } from './update-envelope.vue';
+export type { EnvelopeEditorSettings } from './features-type';
 export { default as unstable_EmbedCreateDocument } from './create-document.vue';
 export { default as unstable_EmbedCreateTemplate } from './create-template.vue';
 export { default as unstable_EmbedUpdateDocument } from './update-document.vue';
 export { default as unstable_EmbedUpdateTemplate } from './update-template.vue';
+export { default as unstable_EmbedCreateEnvelope } from './create-envelope.vue';
+export { default as unstable_EmbedUpdateEnvelope } from './update-envelope.vue';
 export { default as unstable_EmbedMultiSignDocument } from './multisign-document.vue'
