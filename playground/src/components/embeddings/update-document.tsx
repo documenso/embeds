@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -45,10 +46,7 @@ const formSchema = z
       }
       return !!data.presignToken && data.presignToken.length > 0;
     },
-    {
-      message: 'Either API key or presign token is required',
-      path: ['apiKey'],
-    },
+    { message: 'Either API key or presign token is required', path: ['apiKey'] },
   );
 
 type FormData = z.infer<typeof formSchema>;
@@ -85,13 +83,8 @@ export default function UpdateDocumentEmbedding() {
   const generatePresignToken = async (apiKey: string) => {
     const response = await fetch(`${host}/api/v2-beta/embedding/create-presign-token`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        expiresIn: 60,
-      }),
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({ expiresIn: 60 }),
     });
 
     if (!response.ok) {
@@ -137,6 +130,13 @@ export default function UpdateDocumentEmbedding() {
 
   return (
     <div className="space-y-6">
+      <Alert>
+        <AlertTitle>V1 Documents</AlertTitle>
+        <AlertDescription>
+          This updates V1 Documents. We recommend using V2 Envelopes for new integrations.
+        </AlertDescription>
+      </Alert>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Card>
