@@ -15,6 +15,8 @@ export type EmbedSignDocumentProps = {
 
   name?: string | undefined;
   lockName?: boolean | undefined;
+  email?: string | undefined;
+  lockEmail?: boolean | undefined;
   allowDocumentRejection?: boolean | undefined;
 
   // Additional props to be passed to the iframe, used for testing out features
@@ -44,6 +46,8 @@ export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
           JSON.stringify({
             name: props.name,
             lockName: props.lockName,
+            email: props.email,
+            lockEmail: props.lockEmail,
 
             css: props.css,
             cssVars: props.cssVars,

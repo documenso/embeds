@@ -23,6 +23,8 @@ import { EmbedSignDocument } from '@documenso/embed-react';
 
 const formSchema = z.object({
   token: z.string().min(1, 'Signing token is required'),
+  email: z.string().email('Must be a valid email').optional().or(z.literal('')),
+  lockEmail: z.boolean().optional(),
   name: z.string().optional(),
   lockName: z.boolean().optional(),
   allowDocumentRejection: z.boolean().optional(),
@@ -43,6 +45,8 @@ export default function SignDocumentEmbedding() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       token: '',
+      email: '',
+      lockEmail: false,
       name: '',
       lockName: false,
       allowDocumentRejection: false,
@@ -100,6 +104,39 @@ export default function SignDocumentEmbedding() {
               />
 
               <Separator />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email (Optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Pre-fill signer email..." {...field} />
+                    </FormControl>
+                    <FormDescription>Pre-fill the signer's email address</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="lockEmail"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>Lock Email</FormLabel>
+                      <FormDescription>
+                        Prevent the signer from changing their email
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 control={form.control}
@@ -214,6 +251,8 @@ export default function SignDocumentEmbedding() {
                 className="h-[800px] w-full"
                 host={host}
                 token={embedConfig.token}
+                email={embedConfig.email}
+                lockEmail={embedConfig.lockEmail}
                 name={embedConfig.name}
                 lockName={embedConfig.lockName}
                 allowDocumentRejection={embedConfig.allowDocumentRejection}

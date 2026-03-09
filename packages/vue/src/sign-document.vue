@@ -17,6 +17,8 @@ export type EmbedSignDocumentProps = {
   darkModeDisabled?: boolean | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
+  email?: string | undefined;
+  lockEmail?: boolean | undefined;
   allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
 
@@ -53,6 +55,8 @@ const src = computed(() => {
       JSON.stringify({
         name: props.name,
         lockName: props.lockName,
+        email: props.email,
+        lockEmail: props.lockEmail,
         css: props.css,
         cssVars: props.cssVars,
         darkModeDisabled: props.darkModeDisabled,
