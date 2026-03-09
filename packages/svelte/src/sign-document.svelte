@@ -9,6 +9,8 @@
     darkModeDisabled?: boolean | undefined;
     name?: string | undefined;
     lockName?: boolean | undefined;
+    email?: string | undefined;
+    lockEmail?: boolean | undefined;
     allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
     // prior to being added to the main props
 
@@ -37,6 +39,8 @@
   export let host: EmbedSignDocumentProps["host"] = undefined;
   export let name: EmbedSignDocumentProps["name"] = undefined;
   export let lockName: EmbedSignDocumentProps["lockName"] = undefined;
+  export let email: EmbedSignDocumentProps["email"] = undefined;
+  export let lockEmail: EmbedSignDocumentProps["lockEmail"] = undefined;
   export let css: EmbedSignDocumentProps["css"] = undefined;
   export let cssVars: EmbedSignDocumentProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedSignDocumentProps["darkModeDisabled"] =
@@ -84,6 +88,8 @@
         JSON.stringify({
           name: name,
           lockName: lockName,
+          email: email,
+          lockEmail: lockEmail,
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
