@@ -2,6 +2,11 @@
   "name": "@documenso/embed-react",
   "version": "0.6.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/documenso/embeds",
+    "directory": "packages/react"
+  },
   "files": [
     "dist"
   ],
