@@ -1,3 +1,4 @@
+import { TrustedResourceUrlPipe } from "./trusted-resource-url-pipe";
 import { Component, ViewChild, ElementRef, Input } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
@@ -25,7 +26,7 @@ import type { DeepPartial, EnvelopeEditorSettings } from "./features-type";
 @Component({
   selector: "embed-update-envelope",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src"></iframe>
+    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
   `,
   styles: [
     `
@@ -35,7 +36,7 @@ import type { DeepPartial, EnvelopeEditorSettings } from "./features-type";
     `,
   ],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TrustedResourceUrlPipe],
 })
 export default class EmbedUpdateEnvelope {
   @Input() host!: EmbedUpdateEnvelopeProps["host"];
