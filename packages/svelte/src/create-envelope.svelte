@@ -5,6 +5,7 @@
     presignToken: string;
     externalId?: string;
     type: "DOCUMENT" | "TEMPLATE";
+    folderId?: string;
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
@@ -26,6 +27,7 @@
   export let host: EmbedCreateEnvelopeProps["host"] = undefined;
   export let externalId: EmbedCreateEnvelopeProps["externalId"] = undefined;
   export let type: EmbedCreateEnvelopeProps["type"];
+  export let folderId: EmbedCreateEnvelopeProps["folderId"] = undefined;
   export let features: EmbedCreateEnvelopeProps["features"] = undefined;
   export let css: EmbedCreateEnvelopeProps["css"] = undefined;
   export let cssVars: EmbedCreateEnvelopeProps["cssVars"] = undefined;
@@ -55,6 +57,7 @@
         JSON.stringify({
           externalId: externalId,
           type: type,
+          folderId: folderId,
           features: features,
           css: css,
           cssVars: cssVars,

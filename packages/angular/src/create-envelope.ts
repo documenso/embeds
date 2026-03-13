@@ -9,6 +9,7 @@ export type EmbedCreateEnvelopeProps = {
   presignToken: string;
   externalId?: string;
   type: "DOCUMENT" | "TEMPLATE";
+  folderId?: string;
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
@@ -42,6 +43,7 @@ export default class EmbedCreateEnvelope {
   @Input() host!: EmbedCreateEnvelopeProps["host"];
   @Input() externalId!: EmbedCreateEnvelopeProps["externalId"];
   @Input() type!: EmbedCreateEnvelopeProps["type"];
+  @Input() folderId!: EmbedCreateEnvelopeProps["folderId"];
   @Input() features!: EmbedCreateEnvelopeProps["features"];
   @Input() css!: EmbedCreateEnvelopeProps["css"];
   @Input() cssVars!: EmbedCreateEnvelopeProps["cssVars"];
@@ -59,6 +61,7 @@ export default class EmbedCreateEnvelope {
         JSON.stringify({
           externalId: this.externalId,
           type: this.type,
+          folderId: this.folderId,
           features: this.features,
           css: this.css,
           cssVars: this.cssVars,
