@@ -38,6 +38,7 @@ const formSchema = z
     presignToken: z.string().optional(),
     externalId: z.string().optional(),
     type: z.enum(['DOCUMENT', 'TEMPLATE']),
+    folderId: z.string().optional(),
     features: EnvelopeFeaturesSchema,
     darkModeDisabled: z.boolean().optional(),
     css: z.string().optional(),
@@ -70,6 +71,7 @@ export default function CreateEnvelopeEmbedding() {
       apiKey: '',
       presignToken: '',
       externalId: '',
+      folderId: '',
       type: 'DOCUMENT',
       features: DEFAULT_ENVELOPE_FEATURES,
       darkModeDisabled: false,
@@ -228,6 +230,27 @@ export default function CreateEnvelopeEmbedding() {
 
               <FormField
                 control={form.control}
+                name="folderId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Folder ID (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter folder ID..."
+                        className="font-mono text-sm"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      The ID of the folder to create the envelope in
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="type"
                 render={({ field }) => (
                   <FormItem>
@@ -331,6 +354,7 @@ export default function CreateEnvelopeEmbedding() {
                 host={host}
                 presignToken={embedConfig.presignToken}
                 externalId={embedConfig.externalId}
+                folderId={embedConfig.folderId || undefined}
                 type={embedConfig.type}
                 features={embedConfig.features}
                 darkModeDisabled={embedConfig.darkModeDisabled}

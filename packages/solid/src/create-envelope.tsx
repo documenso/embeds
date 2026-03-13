@@ -6,6 +6,7 @@ export type EmbedCreateEnvelopeProps = {
   presignToken: string;
   externalId?: string;
   type: "DOCUMENT" | "TEMPLATE";
+  folderId?: string;
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
@@ -28,6 +29,7 @@ function EmbedCreateEnvelope(props: EmbedCreateEnvelopeProps) {
         JSON.stringify({
           externalId: props.externalId,
           type: props.type,
+          folderId: props.folderId,
           features: props.features,
           css: props.css,
           cssVars: props.cssVars,
