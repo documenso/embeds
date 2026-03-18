@@ -33,6 +33,7 @@ const formSchema = z
     externalId: z.string().optional(),
     features: EnvelopeFeaturesSchema,
     darkModeDisabled: z.boolean().optional(),
+    language: z.string().optional(),
     css: z.string().optional(),
   })
   .refine(
@@ -66,6 +67,7 @@ export default function UpdateEnvelopeEmbedding() {
       externalId: '',
       features: DEFAULT_ENVELOPE_FEATURES,
       darkModeDisabled: false,
+      language: '',
       css: '',
     },
   });
@@ -257,6 +259,25 @@ export default function UpdateEnvelopeEmbedding() {
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="language"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Language (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g. en, de, fr..."
+                        className="font-mono text-sm"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>Set the language for the embedded editor</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Separator />
 
               <FormField
@@ -320,6 +341,7 @@ export default function UpdateEnvelopeEmbedding() {
                 externalId={embedConfig.externalId}
                 features={embedConfig.features}
                 darkModeDisabled={embedConfig.darkModeDisabled}
+                language={embedConfig.language || undefined}
                 css={embedConfig.css}
                 onEnvelopeUpdated={(data) => console.log('Envelope updated:', data)}
               />

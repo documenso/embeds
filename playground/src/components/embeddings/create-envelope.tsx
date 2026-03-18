@@ -41,6 +41,7 @@ const formSchema = z
     folderId: z.string().optional(),
     features: EnvelopeFeaturesSchema,
     darkModeDisabled: z.boolean().optional(),
+    language: z.string().optional(),
     css: z.string().optional(),
   })
   .refine(
@@ -75,6 +76,7 @@ export default function CreateEnvelopeEmbedding() {
       type: 'DOCUMENT',
       features: DEFAULT_ENVELOPE_FEATURES,
       darkModeDisabled: false,
+      language: '',
       css: '',
     },
   });
@@ -294,6 +296,25 @@ export default function CreateEnvelopeEmbedding() {
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="language"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Language (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g. en, de, fr..."
+                        className="font-mono text-sm"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>Set the language for the embedded editor</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Separator />
 
               <FormField
@@ -358,6 +379,7 @@ export default function CreateEnvelopeEmbedding() {
                 type={embedConfig.type}
                 features={embedConfig.features}
                 darkModeDisabled={embedConfig.darkModeDisabled}
+                language={embedConfig.language || undefined}
                 css={embedConfig.css}
                 onEnvelopeCreated={(data) => console.log('Envelope created:', data)}
               />
