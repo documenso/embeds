@@ -12,6 +12,7 @@ export type EmbedSignDocumentProps = {
   cssVars?: (CssVars & Record<string, string>) | undefined;
 
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
 
   name?: string | undefined;
   lockName?: boolean | undefined;
@@ -52,6 +53,7 @@ export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            language: props.language,
             allowDocumentRejection: props.allowDocumentRejection,
             ...props.additionalProps,
           }),

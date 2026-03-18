@@ -7,6 +7,7 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
+    language?: string | undefined;
     name?: string | undefined;
     lockName?: boolean | undefined;
     email?: string | undefined;
@@ -45,6 +46,7 @@
   export let cssVars: EmbedSignDocumentProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedSignDocumentProps["darkModeDisabled"] =
     undefined;
+  export let language: EmbedSignDocumentProps["language"] = undefined;
   export let allowDocumentRejection: EmbedSignDocumentProps["allowDocumentRejection"] =
     undefined;
   export let additionalProps: EmbedSignDocumentProps["additionalProps"] =
@@ -93,6 +95,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          language: language,
           allowDocumentRejection: allowDocumentRejection,
           ...additionalProps,
         })

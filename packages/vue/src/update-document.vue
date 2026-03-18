@@ -17,6 +17,7 @@ export type EmbedUpdateDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -56,6 +57,7 @@ const src = computed(() => {
         css: props.css,
         cssVars: props.cssVars,
         darkModeDisabled: props.darkModeDisabled,
+        language: props.language,
         onlyEditFields: props.onlyEditFields,
         ...props.additionalProps,
       })

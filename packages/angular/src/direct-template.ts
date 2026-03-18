@@ -12,6 +12,7 @@ export type EmbedDirectTemplateProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
   name?: string | undefined;
@@ -56,6 +57,7 @@ export default class EmbedDirectTemplate {
   @Input() css!: EmbedDirectTemplateProps["css"];
   @Input() cssVars!: EmbedDirectTemplateProps["cssVars"];
   @Input() darkModeDisabled!: EmbedDirectTemplateProps["darkModeDisabled"];
+  @Input() language!: EmbedDirectTemplateProps["language"];
   @Input() additionalProps!: EmbedDirectTemplateProps["additionalProps"];
   @Input() token!: EmbedDirectTemplateProps["token"];
   @Input() externalId!: EmbedDirectTemplateProps["externalId"];
@@ -81,6 +83,7 @@ export default class EmbedDirectTemplate {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
           ...this.additionalProps,
         })
       )

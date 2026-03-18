@@ -13,6 +13,7 @@ export type EmbedUpdateTemplateProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -55,6 +56,7 @@ export default class EmbedUpdateTemplate {
   @Input() css!: EmbedUpdateTemplateProps["css"];
   @Input() cssVars!: EmbedUpdateTemplateProps["cssVars"];
   @Input() darkModeDisabled!: EmbedUpdateTemplateProps["darkModeDisabled"];
+  @Input() language!: EmbedUpdateTemplateProps["language"];
   @Input() onlyEditFields!: EmbedUpdateTemplateProps["onlyEditFields"];
   @Input() additionalProps!: EmbedUpdateTemplateProps["additionalProps"];
   @Input() templateId!: EmbedUpdateTemplateProps["templateId"];
@@ -74,6 +76,7 @@ export default class EmbedUpdateTemplate {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
           onlyEditFields: this.onlyEditFields,
           ...this.additionalProps,
         })

@@ -8,7 +8,8 @@ export type EmbedUpdateEnvelopeProps = {
   envelopeId: string;
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
-  darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+  darkModeDisabled?: boolean | undefined;
+  language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
 
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
   onEnvelopeUpdated?: (data: {
@@ -31,6 +32,7 @@ function EmbedUpdateEnvelope(props: EmbedUpdateEnvelopeProps) {
           css: props.css,
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
+          language: props.language,
         })
       )
     );

@@ -12,6 +12,7 @@ export type EmbedCreateTemplateProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -53,6 +54,7 @@ export default class EmbedCreateTemplate {
   @Input() css!: EmbedCreateTemplateProps["css"];
   @Input() cssVars!: EmbedCreateTemplateProps["cssVars"];
   @Input() darkModeDisabled!: EmbedCreateTemplateProps["darkModeDisabled"];
+  @Input() language!: EmbedCreateTemplateProps["language"];
   @Input() additionalProps!: EmbedCreateTemplateProps["additionalProps"];
   @Input() presignToken!: EmbedCreateTemplateProps["presignToken"];
   @Input() onTemplateCreated!: EmbedCreateTemplateProps["onTemplateCreated"];
@@ -70,6 +72,7 @@ export default class EmbedCreateTemplate {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
           ...this.additionalProps,
         })
       )
