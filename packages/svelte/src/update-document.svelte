@@ -9,6 +9,7 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
+    language?: string | undefined;
     features?: {
       allowConfigureSignatureTypes?: boolean;
       allowConfigureLanguage?: boolean;
@@ -41,6 +42,7 @@
   export let cssVars: EmbedUpdateDocumentProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedUpdateDocumentProps["darkModeDisabled"] =
     undefined;
+  export let language: EmbedUpdateDocumentProps["language"] = undefined;
   export let onlyEditFields: EmbedUpdateDocumentProps["onlyEditFields"] =
     undefined;
   export let additionalProps: EmbedUpdateDocumentProps["additionalProps"] =
@@ -73,6 +75,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          language: language,
           onlyEditFields: onlyEditFields,
           ...additionalProps,
         })

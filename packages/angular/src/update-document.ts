@@ -13,6 +13,7 @@ export type EmbedUpdateDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -56,6 +57,7 @@ export default class EmbedUpdateDocument {
   @Input() css!: EmbedUpdateDocumentProps["css"];
   @Input() cssVars!: EmbedUpdateDocumentProps["cssVars"];
   @Input() darkModeDisabled!: EmbedUpdateDocumentProps["darkModeDisabled"];
+  @Input() language!: EmbedUpdateDocumentProps["language"];
   @Input() onlyEditFields!: EmbedUpdateDocumentProps["onlyEditFields"];
   @Input() additionalProps!: EmbedUpdateDocumentProps["additionalProps"];
   @Input() documentId!: EmbedUpdateDocumentProps["documentId"];
@@ -75,6 +77,7 @@ export default class EmbedUpdateDocument {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
           onlyEditFields: this.onlyEditFields,
           ...this.additionalProps,
         })

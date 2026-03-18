@@ -7,7 +7,8 @@
     envelopeId: string;
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
-    darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+    darkModeDisabled?: boolean | undefined;
+    language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
 
     features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
     onEnvelopeUpdated?: (data: {
@@ -30,6 +31,7 @@
   export let cssVars: EmbedUpdateEnvelopeProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedUpdateEnvelopeProps["darkModeDisabled"] =
     undefined;
+  export let language: EmbedUpdateEnvelopeProps["language"] = undefined;
   export let envelopeId: EmbedUpdateEnvelopeProps["envelopeId"];
   export let presignToken: EmbedUpdateEnvelopeProps["presignToken"];
   export let onEnvelopeUpdated: EmbedUpdateEnvelopeProps["onEnvelopeUpdated"] =
@@ -58,6 +60,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          language: language,
         })
       )
     );

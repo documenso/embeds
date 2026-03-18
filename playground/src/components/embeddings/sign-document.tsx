@@ -29,6 +29,7 @@ const formSchema = z.object({
   lockName: z.boolean().optional(),
   allowDocumentRejection: z.boolean().optional(),
   darkModeDisabled: z.boolean().optional(),
+  language: z.string().optional(),
   css: z.string().optional(),
 });
 
@@ -51,6 +52,7 @@ export default function SignDocumentEmbedding() {
       lockName: false,
       allowDocumentRejection: false,
       darkModeDisabled: false,
+      language: '',
       css: '',
     },
   });
@@ -201,6 +203,25 @@ export default function SignDocumentEmbedding() {
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="language"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Language (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g. en, de, fr..."
+                        className="font-mono text-sm"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>Set the language for the embedded document</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Separator />
 
               <FormField
@@ -257,6 +278,7 @@ export default function SignDocumentEmbedding() {
                 lockName={embedConfig.lockName}
                 allowDocumentRejection={embedConfig.allowDocumentRejection}
                 darkModeDisabled={embedConfig.darkModeDisabled}
+                language={embedConfig.language || undefined}
                 css={embedConfig.css}
                 onDocumentReady={() => console.log('Document ready')}
                 onDocumentCompleted={(data) => console.log('Document completed:', data)}

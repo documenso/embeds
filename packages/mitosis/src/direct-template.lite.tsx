@@ -13,6 +13,7 @@ export type EmbedDirectTemplateProps = {
   cssVars?: (CssVars & Record<string, string>) | undefined;
 
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
 
   email?: string | undefined;
   lockEmail?: boolean | undefined;
@@ -48,6 +49,7 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            language: props.language,
             ...props.additionalProps,
           }),
         ),

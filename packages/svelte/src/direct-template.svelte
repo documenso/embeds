@@ -8,6 +8,7 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
+    language?: string | undefined;
     email?: string | undefined;
     lockEmail?: boolean | undefined;
     name?: string | undefined;
@@ -41,6 +42,7 @@
   export let cssVars: EmbedDirectTemplateProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedDirectTemplateProps["darkModeDisabled"] =
     undefined;
+  export let language: EmbedDirectTemplateProps["language"] = undefined;
   export let additionalProps: EmbedDirectTemplateProps["additionalProps"] =
     undefined;
   export let token: EmbedDirectTemplateProps["token"];
@@ -94,6 +96,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          language: language,
           ...additionalProps,
         })
       )

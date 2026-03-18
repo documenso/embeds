@@ -9,6 +9,7 @@ export type EmbedCreateTemplateProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -39,6 +40,7 @@ function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
           css: props.css,
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
+          language: props.language,
           ...props.additionalProps,
         })
       )

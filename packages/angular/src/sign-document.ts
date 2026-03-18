@@ -11,6 +11,7 @@ export type EmbedSignDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   email?: string | undefined;
@@ -60,6 +61,7 @@ export default class EmbedSignDocument {
   @Input() css!: EmbedSignDocumentProps["css"];
   @Input() cssVars!: EmbedSignDocumentProps["cssVars"];
   @Input() darkModeDisabled!: EmbedSignDocumentProps["darkModeDisabled"];
+  @Input() language!: EmbedSignDocumentProps["language"];
   @Input()
   allowDocumentRejection!: EmbedSignDocumentProps["allowDocumentRejection"];
   @Input() additionalProps!: EmbedSignDocumentProps["additionalProps"];
@@ -84,6 +86,7 @@ export default class EmbedSignDocument {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
           allowDocumentRejection: this.allowDocumentRejection,
           ...this.additionalProps,
         })

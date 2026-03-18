@@ -8,6 +8,7 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
+    language?: string | undefined;
     features?: {
       allowConfigureSignatureTypes?: boolean;
       allowConfigureLanguage?: boolean;
@@ -38,6 +39,7 @@
   export let cssVars: EmbedCreateTemplateProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedCreateTemplateProps["darkModeDisabled"] =
     undefined;
+  export let language: EmbedCreateTemplateProps["language"] = undefined;
   export let additionalProps: EmbedCreateTemplateProps["additionalProps"] =
     undefined;
   export let presignToken: EmbedCreateTemplateProps["presignToken"];
@@ -67,6 +69,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          language: language,
           ...additionalProps,
         })
       )

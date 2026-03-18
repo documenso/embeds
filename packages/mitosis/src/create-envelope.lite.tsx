@@ -16,6 +16,7 @@ export type EmbedCreateEnvelopeProps = {
   cssVars?: (CssVars & Record<string, string>) | undefined;
 
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
 
   // biome-ignore lint/suspicious/noExplicitAny: Hehe
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
@@ -40,6 +41,7 @@ export default function EmbedCreateEnvelope(props: EmbedCreateEnvelopeProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            language: props.language,
           }),
         ),
       );

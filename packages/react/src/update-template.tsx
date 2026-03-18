@@ -12,6 +12,7 @@ export type EmbedUpdateTemplateProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -43,6 +44,7 @@ function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
           css: props.css,
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
+          language: props.language,
           onlyEditFields: props.onlyEditFields,
           ...props.additionalProps,
         })

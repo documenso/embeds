@@ -15,6 +15,7 @@ export type EmbedSignDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   email?: string | undefined;
@@ -60,6 +61,7 @@ const src = computed(() => {
         css: props.css,
         cssVars: props.cssVars,
         darkModeDisabled: props.darkModeDisabled,
+        language: props.language,
         allowDocumentRejection: props.allowDocumentRejection,
         ...props.additionalProps,
       })

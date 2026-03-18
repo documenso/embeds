@@ -9,6 +9,7 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
+    language?: string | undefined;
     features?: {
       allowConfigureSignatureTypes?: boolean;
       allowConfigureLanguage?: boolean;
@@ -40,6 +41,7 @@
   export let cssVars: EmbedUpdateTemplateProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedUpdateTemplateProps["darkModeDisabled"] =
     undefined;
+  export let language: EmbedUpdateTemplateProps["language"] = undefined;
   export let onlyEditFields: EmbedUpdateTemplateProps["onlyEditFields"] =
     undefined;
   export let additionalProps: EmbedUpdateTemplateProps["additionalProps"] =
@@ -72,6 +74,7 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
+          language: language,
           onlyEditFields: onlyEditFields,
           ...additionalProps,
         })

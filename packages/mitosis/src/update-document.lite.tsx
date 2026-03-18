@@ -14,6 +14,7 @@ export type EmbedUpdateDocumentProps = {
   cssVars?: (CssVars & Record<string, string>) | undefined;
 
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
 
   features?: {
     allowConfigureSignatureTypes?: boolean;
@@ -51,6 +52,7 @@ export default function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            language: props.language,
             onlyEditFields: props.onlyEditFields,
             ...props.additionalProps,
           }),

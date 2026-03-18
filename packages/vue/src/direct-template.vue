@@ -16,6 +16,7 @@ export type EmbedDirectTemplateProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
   name?: string | undefined;
@@ -56,6 +57,7 @@ const src = computed(() => {
         css: props.css,
         cssVars: props.cssVars,
         darkModeDisabled: props.darkModeDisabled,
+        language: props.language,
         ...props.additionalProps,
       })
     )

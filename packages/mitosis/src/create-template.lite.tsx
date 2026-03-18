@@ -13,6 +13,7 @@ export type EmbedCreateTemplateProps = {
   cssVars?: (CssVars & Record<string, string>) | undefined;
 
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
 
   features?: {
     allowConfigureSignatureTypes?: boolean;
@@ -46,6 +47,7 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
             css: props.css,
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
+            language: props.language,
             ...props.additionalProps,
           }),
         ),

@@ -11,7 +11,8 @@ export type EmbedUpdateEnvelopeProps = {
   envelopeId: string;
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
-  darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+  darkModeDisabled?: boolean | undefined;
+  language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
 
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
   onEnvelopeUpdated?: (data: {
@@ -45,6 +46,7 @@ export default class EmbedUpdateEnvelope {
   @Input() css!: EmbedUpdateEnvelopeProps["css"];
   @Input() cssVars!: EmbedUpdateEnvelopeProps["cssVars"];
   @Input() darkModeDisabled!: EmbedUpdateEnvelopeProps["darkModeDisabled"];
+  @Input() language!: EmbedUpdateEnvelopeProps["language"];
   @Input() envelopeId!: EmbedUpdateEnvelopeProps["envelopeId"];
   @Input() presignToken!: EmbedUpdateEnvelopeProps["presignToken"];
   @Input() onEnvelopeUpdated!: EmbedUpdateEnvelopeProps["onEnvelopeUpdated"];
@@ -62,6 +64,7 @@ export default class EmbedUpdateEnvelope {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
         })
       )
     );

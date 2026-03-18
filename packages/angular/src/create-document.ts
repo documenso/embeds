@@ -12,6 +12,7 @@ export type EmbedCreateDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
+  language?: string | undefined;
   features?: {
     allowConfigureSignatureTypes?: boolean;
     allowConfigureLanguage?: boolean;
@@ -53,6 +54,7 @@ export default class EmbedCreateDocument {
   @Input() css!: EmbedCreateDocumentProps["css"];
   @Input() cssVars!: EmbedCreateDocumentProps["cssVars"];
   @Input() darkModeDisabled!: EmbedCreateDocumentProps["darkModeDisabled"];
+  @Input() language!: EmbedCreateDocumentProps["language"];
   @Input() additionalProps!: EmbedCreateDocumentProps["additionalProps"];
   @Input() presignToken!: EmbedCreateDocumentProps["presignToken"];
   @Input() onDocumentCreated!: EmbedCreateDocumentProps["onDocumentCreated"];
@@ -70,6 +72,7 @@ export default class EmbedCreateDocument {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
           ...this.additionalProps,
         })
       )

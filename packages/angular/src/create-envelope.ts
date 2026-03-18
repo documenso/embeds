@@ -12,7 +12,8 @@ export type EmbedCreateEnvelopeProps = {
   folderId?: string;
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
-  darkModeDisabled?: boolean | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+  darkModeDisabled?: boolean | undefined;
+  language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
 
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
   onEnvelopeCreated?: (data: {
@@ -48,6 +49,7 @@ export default class EmbedCreateEnvelope {
   @Input() css!: EmbedCreateEnvelopeProps["css"];
   @Input() cssVars!: EmbedCreateEnvelopeProps["cssVars"];
   @Input() darkModeDisabled!: EmbedCreateEnvelopeProps["darkModeDisabled"];
+  @Input() language!: EmbedCreateEnvelopeProps["language"];
   @Input() presignToken!: EmbedCreateEnvelopeProps["presignToken"];
   @Input() onEnvelopeCreated!: EmbedCreateEnvelopeProps["onEnvelopeCreated"];
   @Input() className!: EmbedCreateEnvelopeProps["className"];
@@ -66,6 +68,7 @@ export default class EmbedCreateEnvelope {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
+          language: this.language,
         })
       )
     );
