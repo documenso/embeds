@@ -41,6 +41,7 @@ export type EnvelopeEditorSettings = {
     allowConfigureOrder: boolean;
     allowUpload: boolean;
     allowDelete: boolean;
+    allowReplace: boolean;
   } | null;
 
   /** If null, recipients will not be configurable at all. */

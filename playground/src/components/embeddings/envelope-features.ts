@@ -47,6 +47,7 @@ export const DEFAULT_ENVELOPE_FEATURES = {
     allowConfigureOrder: true,
     allowUpload: true,
     allowDelete: true,
+    allowReplace: true,
   },
   recipients: {
     allowConfigureSigningOrder: true,
@@ -88,6 +89,7 @@ export const DEFAULT_ENVELOPE_FEATURES_DESCRIPTIONS: EnvelopeEmbedFeaturesDescri
     allowConfigureOrder: 'Allow reordering envelope items',
     allowUpload: 'Allow uploading new documents to the envelope',
     allowDelete: 'Allow removing envelope items',
+    allowReplace: 'Allow replacing envelope items',
   },
   recipients: {
     allowConfigureSigningOrder: 'Allow configuring signing order',
@@ -133,6 +135,7 @@ export const EnvelopeFeaturesSchema = z.object({
       allowConfigureOrder: z.boolean(),
       allowUpload: z.boolean(),
       allowDelete: z.boolean(),
+      allowReplace: z.boolean(),
     })
     .nullable(),
   recipients: z
