@@ -10,7 +10,6 @@ export type EmbedMultiSignDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
-  language?: string | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
@@ -54,7 +53,6 @@ function EmbedMultiSignDocument(props: EmbedMultiSignDocumentProps) {
           css: props.css,
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
-          language: props.language,
           allowDocumentRejection: props.allowDocumentRejection,
           ...props.additionalProps,
         })

@@ -7,7 +7,6 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
-    language?: string | undefined;
     name?: string | undefined;
     lockName?: boolean | undefined;
     allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
@@ -51,7 +50,6 @@
   export let cssVars: EmbedMultiSignDocumentProps["cssVars"] = undefined;
   export let darkModeDisabled: EmbedMultiSignDocumentProps["darkModeDisabled"] =
     undefined;
-  export let language: EmbedMultiSignDocumentProps["language"] = undefined;
   export let allowDocumentRejection: EmbedMultiSignDocumentProps["allowDocumentRejection"] =
     undefined;
   export let additionalProps: EmbedMultiSignDocumentProps["additionalProps"] =
@@ -104,7 +102,6 @@
           css: css,
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
-          language: language,
           allowDocumentRejection: allowDocumentRejection,
           ...additionalProps,
         })

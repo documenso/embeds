@@ -11,7 +11,6 @@ export type EmbedMultiSignDocumentProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
-  language?: string | undefined;
   name?: string | undefined;
   lockName?: boolean | undefined;
   allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
@@ -66,7 +65,6 @@ export default class EmbedMultiSignDocument {
   @Input() css!: EmbedMultiSignDocumentProps["css"];
   @Input() cssVars!: EmbedMultiSignDocumentProps["cssVars"];
   @Input() darkModeDisabled!: EmbedMultiSignDocumentProps["darkModeDisabled"];
-  @Input() language!: EmbedMultiSignDocumentProps["language"];
   @Input()
   allowDocumentRejection!: EmbedMultiSignDocumentProps["allowDocumentRejection"];
   @Input() additionalProps!: EmbedMultiSignDocumentProps["additionalProps"];
@@ -93,7 +91,6 @@ export default class EmbedMultiSignDocument {
           css: this.css,
           cssVars: this.cssVars,
           darkModeDisabled: this.darkModeDisabled,
-          language: this.language,
           allowDocumentRejection: this.allowDocumentRejection,
           ...this.additionalProps,
         })
