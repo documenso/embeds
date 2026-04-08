@@ -13,7 +13,7 @@
   "license": "MIT",
   "description": "",
   "overrides": {
-    "@angular/compiler": "^21.0.0",
+    "@angular/compiler": "^19.0.0",
     "ajv": "^8.0.0",
     "pacote": "^21.1.0",
     "serialize-javascript": "^7.0.4",
