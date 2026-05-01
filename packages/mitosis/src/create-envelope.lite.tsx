@@ -8,6 +8,10 @@ export type EmbedCreateEnvelopeProps = {
   host?: string;
   presignToken: string;
   externalId?: string;
+  user?: {
+    name?: string;
+    email?: string;
+  };
 
   type: 'DOCUMENT' | 'TEMPLATE';
   folderId?: string;
@@ -35,6 +39,7 @@ export default function EmbedCreateEnvelope(props: EmbedCreateEnvelopeProps) {
         encodeURIComponent(
           JSON.stringify({
             externalId: props.externalId,
+            user: props.user,
             type: props.type,
             folderId: props.folderId,
             features: props.features,

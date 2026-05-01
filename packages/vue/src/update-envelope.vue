@@ -13,6 +13,10 @@ export type EmbedUpdateEnvelopeProps = {
   host?: string;
   presignToken: string;
   externalId?: string;
+  user?: {
+    name?: string;
+    email?: string;
+  };
   envelopeId: string;
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
@@ -42,6 +46,7 @@ const src = computed(() => {
     encodeURIComponent(
       JSON.stringify({
         externalId: props.externalId,
+        user: props.user,
         features: props.features,
         css: props.css,
         cssVars: props.cssVars,

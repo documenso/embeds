@@ -31,6 +31,12 @@ const formSchema = z
     presignToken: z.string().optional(),
     envelopeId: z.string(),
     externalId: z.string().optional(),
+    user: z
+      .object({
+        name: z.string().optional(),
+        email: z.string().email().optional(),
+      })
+      .optional(),
     features: EnvelopeFeaturesSchema,
     darkModeDisabled: z.boolean().optional(),
     language: z.string().optional(),
@@ -65,6 +71,10 @@ export default function UpdateEnvelopeEmbedding() {
       presignToken: '',
       envelopeId: '',
       externalId: '',
+      user: {
+        name: '',
+        email: undefined,
+      },
       features: DEFAULT_ENVELOPE_FEATURES,
       darkModeDisabled: false,
       language: '',
@@ -300,6 +310,43 @@ export default function UpdateEnvelopeEmbedding() {
                 )}
               />
 
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="user.email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>User Email (Optional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter user email..."
+                          className="font-mono text-sm"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Email address to prefill for the user</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="user.name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>User Name (Optional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter user name..." {...field} />
+                      </FormControl>
+                      <FormDescription>Name to prefill for the user</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <Separator />
 
               {error && (
@@ -339,6 +386,14 @@ export default function UpdateEnvelopeEmbedding() {
                 envelopeId={embedConfig.envelopeId}
                 presignToken={embedConfig.presignToken}
                 externalId={embedConfig.externalId}
+                user={
+                  embedConfig.user?.email || embedConfig.user?.name
+                    ? {
+                        email: embedConfig.user.email || undefined,
+                        name: embedConfig.user.name || undefined,
+                      }
+                    : undefined
+                }
                 features={embedConfig.features}
                 darkModeDisabled={embedConfig.darkModeDisabled}
                 language={embedConfig.language || undefined}

@@ -4,6 +4,10 @@
     host?: string;
     presignToken: string;
     externalId?: string;
+    user?: {
+      name?: string;
+      email?: string;
+    };
     envelopeId: string;
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
@@ -26,6 +30,7 @@
 
   export let host: EmbedUpdateEnvelopeProps["host"] = undefined;
   export let externalId: EmbedUpdateEnvelopeProps["externalId"] = undefined;
+  export let user: EmbedUpdateEnvelopeProps["user"] = undefined;
   export let features: EmbedUpdateEnvelopeProps["features"] = undefined;
   export let css: EmbedUpdateEnvelopeProps["css"] = undefined;
   export let cssVars: EmbedUpdateEnvelopeProps["cssVars"] = undefined;
@@ -56,6 +61,7 @@
       encodeURIComponent(
         JSON.stringify({
           externalId: externalId,
+          user: user,
           features: features,
           css: css,
           cssVars: cssVars,

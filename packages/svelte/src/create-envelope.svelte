@@ -4,6 +4,10 @@
     host?: string;
     presignToken: string;
     externalId?: string;
+    user?: {
+      name?: string;
+      email?: string;
+    };
     type: "DOCUMENT" | "TEMPLATE";
     folderId?: string;
     css?: string | undefined;
@@ -27,6 +31,7 @@
 
   export let host: EmbedCreateEnvelopeProps["host"] = undefined;
   export let externalId: EmbedCreateEnvelopeProps["externalId"] = undefined;
+  export let user: EmbedCreateEnvelopeProps["user"] = undefined;
   export let type: EmbedCreateEnvelopeProps["type"];
   export let folderId: EmbedCreateEnvelopeProps["folderId"] = undefined;
   export let features: EmbedCreateEnvelopeProps["features"] = undefined;
@@ -58,6 +63,7 @@
       encodeURIComponent(
         JSON.stringify({
           externalId: externalId,
+          user: user,
           type: type,
           folderId: folderId,
           features: features,
