@@ -8,6 +8,10 @@ export type EmbedCreateEnvelopeProps = {
   host?: string;
   presignToken: string;
   externalId?: string;
+  user?: {
+    name?: string;
+    email?: string;
+  };
   type: "DOCUMENT" | "TEMPLATE";
   folderId?: string;
   css?: string | undefined;
@@ -43,6 +47,7 @@ import type { DeepPartial, EnvelopeEditorSettings } from "./features-type";
 export default class EmbedCreateEnvelope {
   @Input() host!: EmbedCreateEnvelopeProps["host"];
   @Input() externalId!: EmbedCreateEnvelopeProps["externalId"];
+  @Input() user!: EmbedCreateEnvelopeProps["user"];
   @Input() type!: EmbedCreateEnvelopeProps["type"];
   @Input() folderId!: EmbedCreateEnvelopeProps["folderId"];
   @Input() features!: EmbedCreateEnvelopeProps["features"];
@@ -62,6 +67,7 @@ export default class EmbedCreateEnvelope {
       encodeURIComponent(
         JSON.stringify({
           externalId: this.externalId,
+          user: this.user,
           type: this.type,
           folderId: this.folderId,
           features: this.features,

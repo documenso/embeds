@@ -37,6 +37,12 @@ const formSchema = z
     apiKey: z.string().optional(),
     presignToken: z.string().optional(),
     externalId: z.string().optional(),
+    user: z
+      .object({
+        name: z.string().optional(),
+        email: z.string().email().optional(),
+      })
+      .optional(),
     type: z.enum(['DOCUMENT', 'TEMPLATE']),
     folderId: z.string().optional(),
     features: EnvelopeFeaturesSchema,
@@ -72,6 +78,10 @@ export default function CreateEnvelopeEmbedding() {
       apiKey: '',
       presignToken: '',
       externalId: '',
+      user: {
+        name: '',
+        email: undefined,
+      },
       folderId: '',
       type: 'DOCUMENT',
       features: DEFAULT_ENVELOPE_FEATURES,
@@ -337,6 +347,42 @@ export default function CreateEnvelopeEmbedding() {
                 )}
               />
 
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <FormField
+                  control={form.control}
+                  name="user.email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>User Email (Optional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter user email..."
+                          className="font-mono text-sm"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Email address to prefill for the user</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="user.name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>User Name (Optional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter user name..." {...field} />
+                      </FormControl>
+                      <FormDescription>Name to prefill for the user</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <Separator />
 
               {error && (
@@ -375,6 +421,14 @@ export default function CreateEnvelopeEmbedding() {
                 host={host}
                 presignToken={embedConfig.presignToken}
                 externalId={embedConfig.externalId}
+                user={
+                  embedConfig.user?.email || embedConfig.user?.name
+                    ? {
+                        email: embedConfig.user.email || undefined,
+                        name: embedConfig.user.name || undefined,
+                      }
+                    : undefined
+                }
                 folderId={embedConfig.folderId || undefined}
                 type={embedConfig.type}
                 features={embedConfig.features}
