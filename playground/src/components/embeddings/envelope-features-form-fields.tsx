@@ -18,7 +18,11 @@ const SECTION_LABELS: Record<string, string> = {
 
 type FeaturesFormValues = { features: TEnvelopeFeatures };
 
-export function EnvelopeFeaturesFormFields({ control }: { control: Control<FeaturesFormValues> }) {
+export function EnvelopeFeaturesFormFields<T extends FeaturesFormValues>({
+  control,
+}: {
+  control: Control<T>;
+}) {
   return (
     <div className="space-y-3">
       <div className="text-sm font-medium">Feature Configuration</div>
@@ -34,16 +38,16 @@ export function EnvelopeFeaturesFormFields({ control }: { control: Control<Featu
             {SECTION_LABELS[section] ?? section}
           </div>
           {(Object.entries(descriptions) as [string, string][])
-            .filter(([key, description]) => description !== 'N/A')
+            .filter(([, description]) => description !== 'N/A')
             .map(([key, description]) => (
               <FormField
                 key={key}
                 control={control}
-                name={`features.${section}.${key}` as FieldPath<FeaturesFormValues>}
+                name={`features.${section}.${key}` as FieldPath<T>}
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
-                      <Checkbox checked={field.value ?? false} onCheckedChange={field.onChange} />
+                      <Checkbox checked={Boolean(field.value)} onCheckedChange={field.onChange} />
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>
