@@ -44,4 +44,8 @@ done
 
 ng build
 rollup --config
-cp dist/index.d.ts dist/index.d.mts
+
+# ng-packagr >= 20 emits the rolled-up types to dist/types/ instead of a flat
+# dist/index.d.ts. Copy them back to the paths referenced by package.json.
+cp dist/types/documenso-embed-angular.d.ts dist/index.d.ts
+cp dist/types/documenso-embed-angular.d.ts dist/index.d.mts

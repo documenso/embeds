@@ -64,7 +64,7 @@ function EmbedCreateDocument(props: EmbedCreateDocumentProps) {
     }
   }
 
-  let __iframe: HTMLIFrameElement;
+  let __iframe!: HTMLIFrameElement;
 
   onMount(() => {
     window.addEventListener("message", handleMessage);

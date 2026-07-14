@@ -10,5 +10,9 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    // @documenso/embed-react is a symlinked file: dependency; the monorepo
+    // uses legacy-peer-deps so react is not hoisted next to it. Force react
+    // to resolve from the playground's own node_modules.
+    dedupe: ['react', 'react-dom'],
   },
 });

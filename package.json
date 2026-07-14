@@ -13,7 +13,7 @@
   "license": "MIT",
   "description": "",
   "overrides": {
-    "@angular/compiler": "^19.0.0",
+    "@angular/compiler": "^21.0.0",
     "ajv": "^8.0.0",
     "pacote": "^21.1.0",
     "serialize-javascript": "^7.0.4",
@@ -31,6 +31,6 @@
     "publint": "^0.2.10",
     "rimraf": "^6.0.1",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "~5.5.4"
+    "typescript": "^5.9.0"
   }
 }

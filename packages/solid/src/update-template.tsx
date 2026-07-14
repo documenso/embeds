@@ -70,7 +70,7 @@ function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
     }
   }
 
-  let __iframe: HTMLIFrameElement;
+  let __iframe!: HTMLIFrameElement;
 
   onMount(() => {
     window.addEventListener("message", handleMessage);
