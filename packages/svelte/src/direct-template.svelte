@@ -31,7 +31,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
 
-  import { CssVars } from "./css-vars";
+  import type { CssVars } from "./css-vars";
 
   export let host: EmbedDirectTemplateProps["host"] = undefined;
   export let name: EmbedDirectTemplateProps["name"] = undefined;
