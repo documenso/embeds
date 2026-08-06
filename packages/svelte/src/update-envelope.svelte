@@ -25,7 +25,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
 
-  import { CssVars } from "./css-vars";
+  import type { CssVars } from "./css-vars";
   import type { DeepPartial, EnvelopeEditorSettings } from "./features-type";
 
   export let host: EmbedUpdateEnvelopeProps["host"] = undefined;
