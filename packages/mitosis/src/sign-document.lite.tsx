@@ -36,7 +36,7 @@ export type EmbedSignDocumentProps = {
 };
 
 export default function EmbedSignDocument(props: EmbedSignDocumentProps) {
-  const __iframe = useRef<HTMLIFrameElement>();
+  const __iframe = useRef<HTMLIFrameElement>(null);
 
   const state = useStore({
     get src() {
