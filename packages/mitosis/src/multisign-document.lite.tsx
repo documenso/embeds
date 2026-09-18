@@ -42,7 +42,7 @@ export type EmbedMultiSignDocumentProps = {
 };
 
 export default function EmbedMultiSignDocument(props: EmbedMultiSignDocumentProps) {
-  const __iframe = useRef<HTMLIFrameElement>();
+  const __iframe = useRef<HTMLIFrameElement>(null);
 
   const state = useStore({
     get src() {

@@ -3,16 +3,13 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [22, 24]
-    name: Build on Node ${{ matrix.node }}
+    name: Build on Node 24.x
     steps:
       - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
       - run: npm install

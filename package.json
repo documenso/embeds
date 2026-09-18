@@ -17,13 +17,17 @@
     "ajv": "^8.0.0",
     "pacote": "^21.1.0",
     "serialize-javascript": "^7.0.4",
-    "minimatch": "^10.2.3"
+    "minimatch": "^10.2.3",
+    "cookie": "^0.7.2",
+    "uuid": "^11.1.1",
+    "@babel/core": "^7.29.7",
+    "esbuild": "^0.28.1"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.4",
     "@biomejs/biome": "^2.0.0",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.14.2",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "@types/node": "^24.13.5",
     "prettier": "^3.3.1",
     "prettier-plugin-sql": "^0.18.0",
     "prettier-plugin-svelte": "^3.3.2",
@@ -32,5 +36,13 @@
     "rimraf": "^6.0.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true,
+    "@parcel/watcher": true,
+    "lmdb": true,
+    "msgpackr-extract": true,
+    "svelte-preprocess": false
   }
 }

@@ -35,7 +35,7 @@ export type EmbedUpdateTemplateProps = {
 };
 
 export default function EmbedUpdateTemplate(props: EmbedUpdateTemplateProps) {
-  const __iframe = useRef<HTMLIFrameElement>();
+  const __iframe = useRef<HTMLIFrameElement>(null);
 
   const state = useStore({
     get src() {

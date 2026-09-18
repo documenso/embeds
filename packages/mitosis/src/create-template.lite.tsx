@@ -32,7 +32,7 @@ export type EmbedCreateTemplateProps = {
 };
 
 export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
-  const __iframe = useRef<HTMLIFrameElement>();
+  const __iframe = useRef<HTMLIFrameElement>(null);
 
   const state = useStore({
     get src() {
