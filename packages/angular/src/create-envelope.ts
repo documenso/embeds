@@ -17,8 +17,9 @@ export type EmbedCreateEnvelopeProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
-  language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+  language?: string | undefined;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Hehe
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
   onEnvelopeCreated?: (data: {
     externalId: string | null;
@@ -32,7 +33,12 @@ import type { DeepPartial, EnvelopeEditorSettings } from "./features-type";
 @Component({
   selector: "embed-create-envelope",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
+    <iframe
+      #__iframe
+      [class]="className"
+      [attr.src]="src"
+      [attr.sandbox]="sandbox"
+    ></iframe>
   `,
   styles: [
     `
@@ -82,6 +88,10 @@ export default class EmbedCreateEnvelope {
     srcUrl.searchParams.set("token", this.presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
+  }
+  get sandbox() {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
   }
   handleMessage(event: MessageEvent) {
     if (this.__iframe?.nativeElement?.contentWindow === event.source) {

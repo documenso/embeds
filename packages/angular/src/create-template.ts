@@ -7,8 +7,9 @@ export type EmbedCreateTemplateProps = {
   className?: string;
   host?: string;
   presignToken: string;
-  externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
+  externalId?: string;
 
+  // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
@@ -20,9 +21,10 @@ export type EmbedCreateTemplateProps = {
     allowConfigureTimezone?: boolean;
     allowConfigureRedirectUrl?: boolean;
     allowConfigureCommunication?: boolean;
-  }; // Additional props to be passed to the iframe, used for testing out features
-  // prior to being added to the main props
+  };
 
+  // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
   onTemplateCreated?: (data: {
     externalId: string;
@@ -35,7 +37,12 @@ import { CssVars } from "./css-vars";
 @Component({
   selector: "embed-create-template",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
+    <iframe
+      #__iframe
+      [class]="className"
+      [attr.src]="src"
+      [attr.sandbox]="sandbox"
+    ></iframe>
   `,
   styles: [
     `
@@ -81,6 +88,10 @@ export default class EmbedCreateTemplate {
     srcUrl.searchParams.set("token", this.presignToken);
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
+  }
+  get sandbox() {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
   }
   handleMessage(event: MessageEvent) {
     if (this.__iframe?.nativeElement?.contentWindow === event.source) {

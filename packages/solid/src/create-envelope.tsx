@@ -14,8 +14,9 @@ export type EmbedCreateEnvelopeProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
-  language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+  language?: string | undefined;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Hehe
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
   onEnvelopeCreated?: (data: {
     externalId: string | null;
@@ -50,6 +51,11 @@ function EmbedCreateEnvelope(props: EmbedCreateEnvelopeProps) {
     return srcUrl.toString();
   });
 
+  const sandbox = createMemo(() => {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
+  });
+
   function handleMessage(event: MessageEvent) {
     if (__iframe?.contentWindow === event.source) {
       switch (event.data.type) {
@@ -71,7 +77,12 @@ function EmbedCreateEnvelope(props: EmbedCreateEnvelopeProps) {
 
   return (
     <>
-      <iframe class={props.className} ref={__iframe!} src={src()}></iframe>
+      <iframe
+        class={props.className}
+        ref={__iframe!}
+        src={src()}
+        sandbox={sandbox()}
+      ></iframe>
     </>
   );
 }

@@ -1,5 +1,10 @@
 <template>
-  <iframe ref="__iframe" :class="className" :src="src"></iframe>
+  <iframe
+    ref="__iframe"
+    :class="className"
+    :src="src"
+    :sandbox="sandbox"
+  ></iframe>
 </template>
 
 <script setup lang="ts">
@@ -21,8 +26,9 @@ export type EmbedUpdateEnvelopeProps = {
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
-  language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+  language?: string | undefined;
 
+  // biome-ignore lint/suspicious/noExplicitAny: Hehe
   features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
   onEnvelopeUpdated?: (data: {
     externalId: string | null;
@@ -62,6 +68,10 @@ const src = computed(() => {
   srcUrl.searchParams.set("token", props.presignToken);
   srcUrl.hash = encodedOptions;
   return srcUrl.toString();
+});
+const sandbox = computed(() => {
+  // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+  return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
 });
 
 function handleMessage(event: MessageEvent) {
