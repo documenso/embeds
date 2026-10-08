@@ -5,8 +5,9 @@ export type EmbedUpdateDocumentProps = {
   host?: string;
   presignToken: string;
   documentId: number;
-  externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
+  externalId?: string;
 
+  // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
@@ -19,9 +20,10 @@ export type EmbedUpdateDocumentProps = {
     allowConfigureRedirectUrl?: boolean;
     allowConfigureCommunication?: boolean;
   };
-  onlyEditFields?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
-  // prior to being added to the main props
+  onlyEditFields?: boolean | undefined;
 
+  // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
   onDocumentUpdated?: (data: {
     externalId: string;
@@ -58,6 +60,11 @@ function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
     return srcUrl.toString();
   });
 
+  const sandbox = createMemo(() => {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
+  });
+
   function handleMessage(event: MessageEvent) {
     if (__iframe?.contentWindow === event.source) {
       switch (event.data.type) {
@@ -79,7 +86,12 @@ function EmbedUpdateDocument(props: EmbedUpdateDocumentProps) {
 
   return (
     <>
-      <iframe class={props.className} ref={__iframe!} src={src()}></iframe>
+      <iframe
+        class={props.className}
+        ref={__iframe!}
+        src={src()}
+        sandbox={sandbox()}
+      ></iframe>
     </>
   );
 }

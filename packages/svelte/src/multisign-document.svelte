@@ -2,16 +2,18 @@
   export type EmbedMultiSignDocumentProps = {
     className?: string;
     host?: string;
-    tokens: string[]; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
+    tokens: string[];
 
+    // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
     name?: string | undefined;
     lockName?: boolean | undefined;
-    allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
-    // prior to being added to the main props
+    allowDocumentRejection?: boolean | undefined;
 
+    // Additional props to be passed to the iframe, used for testing out features
+    // prior to being added to the main props
     additionalProps?: Record<string, string | number | boolean> | undefined;
     onDocumentReady?: () => void;
     onDocumentCompleted?: (data: {
@@ -41,7 +43,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
 
-  import type { CssVars } from "./css-vars";
+  import { CssVars } from "./css-vars";
 
   export let host: EmbedMultiSignDocumentProps["host"] = undefined;
   export let name: EmbedMultiSignDocumentProps["name"] = undefined;
@@ -73,19 +75,15 @@
         case "document-ready":
           onDocumentReady?.();
           break;
-
         case "document-completed":
           onDocumentCompleted?.(event.data.data);
           break;
-
         case "document-error":
           onDocumentError?.(event.data.data);
           break;
-
         case "document-rejected":
           onDocumentRejected?.(event.data.data);
           break;
-
         case "all-documents-completed":
           onAllDocumentsCompleted?.(event.data.data);
           break;
@@ -108,12 +106,14 @@
       )
     );
     const srcUrl = new URL(`/embed/v1/multisign`, appHost);
-
     for (const token of tokens) {
       srcUrl.searchParams.append("token", token);
     }
-
     return `${srcUrl}#${encodedOptions}`;
+  };
+  $: sandbox = () => {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
   };
 
   let __iframe;
@@ -127,4 +127,9 @@
   });
 </script>
 
-<iframe bind:this={__iframe} class={className} src={src()} />
+<iframe
+  bind:this={__iframe}
+  class={className}
+  src={src()}
+  sandbox={sandbox()}
+/>

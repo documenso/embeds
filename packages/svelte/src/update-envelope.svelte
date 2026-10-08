@@ -12,8 +12,9 @@
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
     darkModeDisabled?: boolean | undefined;
-    language?: string | undefined; // biome-ignore lint/suspicious/noExplicitAny: Hehe
+    language?: string | undefined;
 
+    // biome-ignore lint/suspicious/noExplicitAny: Hehe
     features?: DeepPartial<EnvelopeEditorSettings> & Record<string, any>;
     onEnvelopeUpdated?: (data: {
       externalId: string | null;
@@ -25,7 +26,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
 
-  import type { CssVars } from "./css-vars";
+  import { CssVars } from "./css-vars";
   import type { DeepPartial, EnvelopeEditorSettings } from "./features-type";
 
   export let host: EmbedUpdateEnvelopeProps["host"] = undefined;
@@ -78,6 +79,10 @@
     srcUrl.hash = encodedOptions;
     return srcUrl.toString();
   };
+  $: sandbox = () => {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
+  };
 
   let __iframe;
 
@@ -90,4 +95,9 @@
   });
 </script>
 
-<iframe bind:this={__iframe} class={className} src={src()} />
+<iframe
+  bind:this={__iframe}
+  class={className}
+  src={src()}
+  sandbox={sandbox()}
+/>

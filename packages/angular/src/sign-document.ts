@@ -6,8 +6,9 @@ import { CommonModule } from "@angular/common";
 export type EmbedSignDocumentProps = {
   className?: string;
   host?: string;
-  token: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
+  token: string;
 
+  // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
@@ -16,9 +17,10 @@ export type EmbedSignDocumentProps = {
   lockName?: boolean | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
-  allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
-  // prior to being added to the main props
+  allowDocumentRejection?: boolean | undefined;
 
+  // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
   onDocumentReady?: () => void;
   onDocumentCompleted?: (data: {
@@ -26,7 +28,7 @@ export type EmbedSignDocumentProps = {
     documentId: number;
     recipientId: number;
   }) => void;
-  onDocumentError?: (error: string) => void;
+  onDocumentError?: (error: string | null) => void;
   onDocumentRejected?: (data: {
     token: string;
     documentId: number;
@@ -40,7 +42,12 @@ import { CssVars } from "./css-vars";
 @Component({
   selector: "embed-sign-document",
   template: `
-    <iframe #__iframe [class]="className" [attr.src]="src | trustedResourceUrl"></iframe>
+    <iframe
+      #__iframe
+      [class]="className"
+      [attr.src]="src"
+      [attr.sandbox]="sandbox"
+    ></iframe>
   `,
   styles: [
     `
@@ -95,21 +102,22 @@ export default class EmbedSignDocument {
     const srcUrl = new URL(`/embed/sign/${this.token}`, appHost);
     return `${srcUrl}#${encodedOptions}`;
   }
+  get sandbox() {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
+  }
   handleMessage(event: MessageEvent) {
     if (this.__iframe?.nativeElement?.contentWindow === event.source) {
       switch (event.data.action) {
         case "document-ready":
           this.onDocumentReady?.();
           break;
-
         case "document-completed":
           this.onDocumentCompleted?.(event.data.data);
           break;
-
         case "document-error":
           this.onDocumentError?.(event.data.data);
           break;
-
         case "document-rejected":
           this.onDocumentRejected?.(event.data.data);
           break;

@@ -6,8 +6,9 @@ export type EmbedDirectTemplateProps = {
   className?: string;
   host?: string;
   token: string;
-  externalId?: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
+  externalId?: string;
 
+  // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
@@ -15,9 +16,10 @@ export type EmbedDirectTemplateProps = {
   email?: string | undefined;
   lockEmail?: boolean | undefined;
   name?: string | undefined;
-  lockName?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
-  // prior to being added to the main props
+  lockName?: boolean | undefined;
 
+  // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
   onDocumentReady?: () => void;
   onDocumentCompleted?: (data: {
@@ -51,12 +53,15 @@ function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
       )
     );
     const srcUrl = new URL(`/embed/direct/${props.token}`, appHost);
-
     if (props.externalId) {
       srcUrl.searchParams.set("externalId", props.externalId);
     }
-
     return `${srcUrl}#${encodedOptions}`;
+  }
+
+  function sandbox() {
+    // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+    return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
   }
 
   function handleMessage(event: MessageEvent) {
@@ -65,19 +70,15 @@ function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
         case "document-ready":
           props.onDocumentReady?.();
           break;
-
         case "document-completed":
           props.onDocumentCompleted?.(event.data.data);
           break;
-
         case "document-error":
           props.onDocumentError?.(event.data.data);
           break;
-
         case "field-signed":
           props.onFieldSigned?.();
           break;
-
         case "field-unsigned":
           props.onFieldUnsigned?.();
           break;
@@ -95,7 +96,14 @@ function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
     };
   }, []);
 
-  return <iframe ref={__iframe} className={props.className} src={src()} />;
+  return (
+    <iframe
+      ref={__iframe}
+      className={props.className}
+      src={src()}
+      sandbox={sandbox()}
+    />
+  );
 }
 
 export default EmbedDirectTemplate;

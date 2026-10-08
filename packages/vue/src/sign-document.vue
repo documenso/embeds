@@ -1,5 +1,10 @@
 <template>
-  <iframe ref="__iframe" :class="className" :src="src"></iframe>
+  <iframe
+    ref="__iframe"
+    :class="className"
+    :src="src"
+    :sandbox="sandbox"
+  ></iframe>
 </template>
 
 <script setup lang="ts">
@@ -10,8 +15,9 @@ import { CssVars } from "./css-vars";
 export type EmbedSignDocumentProps = {
   className?: string;
   host?: string;
-  token: string; // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
+  token: string;
 
+  // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
   darkModeDisabled?: boolean | undefined;
@@ -20,9 +26,10 @@ export type EmbedSignDocumentProps = {
   lockName?: boolean | undefined;
   email?: string | undefined;
   lockEmail?: boolean | undefined;
-  allowDocumentRejection?: boolean | undefined; // Additional props to be passed to the iframe, used for testing out features
-  // prior to being added to the main props
+  allowDocumentRejection?: boolean | undefined;
 
+  // Additional props to be passed to the iframe, used for testing out features
+  // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
   onDocumentReady?: () => void;
   onDocumentCompleted?: (data: {
@@ -30,7 +37,7 @@ export type EmbedSignDocumentProps = {
     documentId: number;
     recipientId: number;
   }) => void;
-  onDocumentError?: (error: string) => void;
+  onDocumentError?: (error: string | null) => void;
   onDocumentRejected?: (data: {
     token: string;
     documentId: number;
@@ -70,6 +77,10 @@ const src = computed(() => {
   const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);
   return `${srcUrl}#${encodedOptions}`;
 });
+const sandbox = computed(() => {
+  // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+  return "allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" as any;
+});
 
 function handleMessage(event: MessageEvent) {
   if (__iframe.value?.contentWindow === event.source) {
@@ -77,15 +88,12 @@ function handleMessage(event: MessageEvent) {
       case "document-ready":
         props.onDocumentReady?.();
         break;
-
       case "document-completed":
         props.onDocumentCompleted?.(event.data.data);
         break;
-
       case "document-error":
         props.onDocumentError?.(event.data.data);
         break;
-
       case "document-rejected":
         props.onDocumentRejected?.(event.data.data);
         break;

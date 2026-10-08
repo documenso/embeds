@@ -61,6 +61,11 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
       return srcUrl.toString();
     },
 
+    get sandbox() {
+      // biome-ignore lint/suspicious/noExplicitAny: Mitosis types `sandbox` as a single token, but the attribute is space-separated.
+      return 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation' as any;
+    },
+
     handleMessage(event: MessageEvent) {
       if (__iframe?.contentWindow === event.source) {
         switch (event.data.type) {
@@ -83,5 +88,7 @@ export default function EmbedCreateTemplate(props: EmbedCreateTemplateProps) {
     window.removeEventListener('message', state.handleMessage);
   });
 
-  return <iframe ref={__iframe} class={props.className} src={state.src}></iframe>;
+  return (
+    <iframe ref={__iframe} class={props.className} src={state.src} sandbox={state.sandbox}></iframe>
+  );
 }
