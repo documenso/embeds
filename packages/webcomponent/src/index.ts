@@ -19,6 +19,7 @@ register(EmbedDirectTemplate, 'documenso-embed-direct-template', [
 register(EmbedSignDocument, 'documenso-embed-sign-document', [
   'token',
   'host',
+  'clientUserId',
   'css',
   'name',
   'lockName',

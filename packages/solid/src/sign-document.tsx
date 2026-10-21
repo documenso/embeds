@@ -5,6 +5,15 @@ export type EmbedSignDocumentProps = {
   host?: string;
   token: string;
 
+  /**
+   * Opaque identifier for the signer, used to prefill and persist their signature
+   * across embeds (Platform Plan).
+   *
+   * Sent as a URL query parameter, so it will appear in request logs. Never pass an
+   * email address or other personally identifiable information here.
+   */
+  clientUserId?: string | undefined;
+
   // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
   css?: string | undefined;
   cssVars?: (CssVars & Record<string, string>) | undefined;
@@ -56,6 +65,9 @@ function EmbedSignDocument(props: EmbedSignDocumentProps) {
       )
     );
     const srcUrl = new URL(`/embed/sign/${props.token}`, appHost);
+    if (props.clientUserId) {
+      srcUrl.searchParams.set("clientUserId", props.clientUserId);
+    }
     return `${srcUrl}#${encodedOptions}`;
   });
 

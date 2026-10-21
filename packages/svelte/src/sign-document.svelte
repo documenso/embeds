@@ -4,6 +4,15 @@
     host?: string;
     token: string;
 
+    /**
+     * Opaque identifier for the signer, used to prefill and persist their signature
+     * across embeds (Platform Plan).
+     *
+     * Sent as a URL query parameter, so it will appear in request logs. Never pass an
+     * email address or other personally identifiable information here.
+     */
+    clientUserId?: string | undefined;
+
     // @src: /apps/web/src/app/embed/direct/[[...url]]/schema
     css?: string | undefined;
     cssVars?: (CssVars & Record<string, string>) | undefined;
@@ -54,6 +63,7 @@
   export let additionalProps: EmbedSignDocumentProps["additionalProps"] =
     undefined;
   export let token: EmbedSignDocumentProps["token"];
+  export let clientUserId: EmbedSignDocumentProps["clientUserId"] = undefined;
   export let onDocumentReady: EmbedSignDocumentProps["onDocumentReady"] =
     undefined;
   export let onDocumentCompleted: EmbedSignDocumentProps["onDocumentCompleted"] =
@@ -101,6 +111,9 @@
       )
     );
     const srcUrl = new URL(`/embed/sign/${token}`, appHost);
+    if (clientUserId) {
+      srcUrl.searchParams.set("clientUserId", clientUserId);
+    }
     return `${srcUrl}#${encodedOptions}`;
   };
   $: sandbox = () => {

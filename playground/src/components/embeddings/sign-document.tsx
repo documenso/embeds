@@ -23,6 +23,7 @@ import { EmbedSignDocument } from '@documenso/embed-react';
 
 const formSchema = z.object({
   token: z.string().min(1, 'Signing token is required'),
+  clientUserId: z.string().optional(),
   email: z.string().email('Must be a valid email').optional().or(z.literal('')),
   lockEmail: z.boolean().optional(),
   name: z.string().optional(),
@@ -46,6 +47,7 @@ export default function SignDocumentEmbedding() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       token: '',
+      clientUserId: '',
       email: '',
       lockEmail: false,
       name: '',
@@ -99,6 +101,29 @@ export default function SignDocumentEmbedding() {
                     </FormControl>
                     <FormDescription>
                       The token for the recipient to sign the document
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="clientUserId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Client User ID (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g. usr_8f2c1b4e"
+                        className="font-mono text-sm"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Opaque identifier used to prefill and persist the signer's signature across
+                      embeds (Platform Plan). Sent as a query param, so never use an email or other
+                      PII.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -272,6 +297,7 @@ export default function SignDocumentEmbedding() {
                 className="h-[800px] w-full"
                 host={host}
                 token={embedConfig.token}
+                clientUserId={embedConfig.clientUserId || undefined}
                 email={embedConfig.email}
                 lockEmail={embedConfig.lockEmail}
                 name={embedConfig.name}
