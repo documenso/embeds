@@ -21,7 +21,12 @@
     "cookie": "^0.7.2",
     "uuid": "^11.1.1",
     "@babel/core": "^7.29.7",
-    "esbuild": "^0.28.1"
+    "esbuild": "^0.28.1",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@angular/build": {
+      "vite": "7.3.7"
+    },
+    "svelte": "^5.57.2"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.4",
