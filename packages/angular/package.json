@@ -43,7 +43,6 @@
     "@angular/platform-browser": "^20.0.0 || ^21.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^21.0.0",
     "@angular/cli": "^21.0.0",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
@@ -55,6 +54,7 @@
     "rollup": "^4.0.0",
     "tslib": "^2.0.0",
     "rxjs": "^7.0.0",
-    "zone.js": "^0.15.0"
+    "zone.js": "^0.15.0",
+    "@angular/build": "^21.0.0"
   }
 }

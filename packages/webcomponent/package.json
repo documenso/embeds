@@ -47,6 +47,6 @@
     "@documenso/embed": "*",
     "@types/preact-custom-element": "^4.0.0",
     "vite": "^7.0.0",
-    "vite-plugin-dts": "^4.0.0"
+    "vite-plugin-dts": "^5.1.2"
   }
 }
