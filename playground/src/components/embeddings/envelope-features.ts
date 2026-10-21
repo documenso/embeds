@@ -40,6 +40,7 @@ export const DEFAULT_ENVELOPE_FEATURES = {
     allowConfigureEmailReplyTo: true,
   },
   actions: {
+    allowContents: true,
     allowAttachments: true,
   },
   envelopeItems: {
@@ -82,6 +83,7 @@ export const DEFAULT_ENVELOPE_FEATURES_DESCRIPTIONS: EnvelopeEmbedFeaturesDescri
     allowConfigureEmailReplyTo: 'Allow users to configure email reply to',
   },
   actions: {
+    allowContents: 'Allow adding contents to the envelope',
     allowAttachments: 'Allow adding attachments to the envelope',
   },
   envelopeItems: {
@@ -127,6 +129,7 @@ export const EnvelopeFeaturesSchema = z.object({
     })
     .nullable(),
   actions: z.object({
+    allowContents: z.boolean(),
     allowAttachments: z.boolean(),
   }),
   envelopeItems: z

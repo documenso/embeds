@@ -27,6 +27,7 @@ export type EnvelopeEditorSettings = {
   } | null;
 
   actions: {
+    allowContents: boolean;
     allowAttachments: boolean;
     // allowDistributing: boolean; // These are not available for embeds.
     // allowDirectLink: boolean; // These are not available for embeds.
