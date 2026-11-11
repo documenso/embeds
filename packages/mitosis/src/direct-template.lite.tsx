@@ -1,4 +1,4 @@
-import { onMount, onUnMount, useRef, useStore } from '@builder.io/mitosis';
+import { onMount, onUnMount, useDefaultProps, useRef, useStore } from '@builder.io/mitosis';
 
 import { CssVars } from './css-vars';
 
@@ -20,6 +20,14 @@ export type EmbedDirectTemplateProps = {
   name?: string | undefined;
   lockName?: boolean | undefined;
 
+  /**
+   * Whether to show the "Download PDF" action. Defaults to `true`.
+   *
+   * This only hides the button, it does not prevent the recipient from downloading
+   * the document.
+   */
+  allowDownloadPDF?: boolean | undefined;
+
   // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -30,6 +38,12 @@ export type EmbedDirectTemplateProps = {
   onFieldSigned?: () => void;
   onFieldUnsigned?: () => void;
 };
+
+useDefaultProps<EmbedDirectTemplateProps>({
+  // Vue casts absent boolean props to `false`, which would hide the download
+  // button for anyone not passing the prop, so the default has to be explicit.
+  allowDownloadPDF: true,
+});
 
 export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
   const __iframe = useRef<HTMLIFrameElement>(null);
@@ -50,6 +64,7 @@ export default function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
             cssVars: props.cssVars,
             darkModeDisabled: props.darkModeDisabled,
             language: props.language,
+            allowDownloadPDF: props.allowDownloadPDF,
             ...props.additionalProps,
           }),
         ),

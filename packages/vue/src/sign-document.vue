@@ -37,6 +37,14 @@ export type EmbedSignDocumentProps = {
   lockEmail?: boolean | undefined;
   allowDocumentRejection?: boolean | undefined;
 
+  /**
+   * Whether to show the "Download PDF" action. Defaults to `true`.
+   *
+   * This only hides the button, it does not prevent the recipient from downloading
+   * the document.
+   */
+  allowDownloadPDF?: boolean | undefined;
+
   // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -55,7 +63,27 @@ export type EmbedSignDocumentProps = {
   }) => void;
 };
 
-const props = defineProps<EmbedSignDocumentProps>();
+const props = withDefaults(defineProps<EmbedSignDocumentProps>(), {
+  host: undefined,
+  name: undefined,
+  lockName: undefined,
+  email: undefined,
+  lockEmail: undefined,
+  css: undefined,
+  cssVars: undefined,
+  darkModeDisabled: undefined,
+  language: undefined,
+  allowDocumentRejection: undefined,
+  allowDownloadPDF: true,
+  additionalProps: undefined,
+  token: undefined,
+  clientUserId: undefined,
+  onDocumentReady: undefined,
+  onDocumentCompleted: undefined,
+  onDocumentError: undefined,
+  onDocumentRejected: undefined,
+  className: undefined,
+});
 
 const __iframe = ref<HTMLIFrameElement>(null);
 
@@ -79,6 +107,7 @@ const src = computed(() => {
         darkModeDisabled: props.darkModeDisabled,
         language: props.language,
         allowDocumentRejection: props.allowDocumentRejection,
+        allowDownloadPDF: props.allowDownloadPDF,
         ...props.additionalProps,
       })
     )

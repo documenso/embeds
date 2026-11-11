@@ -24,6 +24,14 @@
     lockEmail?: boolean | undefined;
     allowDocumentRejection?: boolean | undefined;
 
+    /**
+     * Whether to show the "Download PDF" action. Defaults to `true`.
+     *
+     * This only hides the button, it does not prevent the recipient from downloading
+     * the document.
+     */
+    allowDownloadPDF?: boolean | undefined;
+
     // Additional props to be passed to the iframe, used for testing out features
     // prior to being added to the main props
     additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -60,6 +68,8 @@
   export let language: EmbedSignDocumentProps["language"] = undefined;
   export let allowDocumentRejection: EmbedSignDocumentProps["allowDocumentRejection"] =
     undefined;
+  export let allowDownloadPDF: EmbedSignDocumentProps["allowDownloadPDF"] =
+    true;
   export let additionalProps: EmbedSignDocumentProps["additionalProps"] =
     undefined;
   export let token: EmbedSignDocumentProps["token"];
@@ -106,6 +116,7 @@
           darkModeDisabled: darkModeDisabled,
           language: language,
           allowDocumentRejection: allowDocumentRejection,
+          allowDownloadPDF: allowDownloadPDF,
           ...additionalProps,
         })
       )
