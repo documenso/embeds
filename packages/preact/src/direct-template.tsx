@@ -18,6 +18,14 @@ export type EmbedDirectTemplateProps = {
   name?: string | undefined;
   lockName?: boolean | undefined;
 
+  /**
+   * Whether to show the "Download PDF" action. Defaults to `true`.
+   *
+   * This only hides the button, it does not prevent the recipient from downloading
+   * the document.
+   */
+  allowDownloadPDF?: boolean | undefined;
+
   // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -34,6 +42,7 @@ export type EmbedDirectTemplateProps = {
 import { CssVars } from "./css-vars";
 
 function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
+  props = { allowDownloadPDF: true, ...props };
   const __iframe = useRef<HTMLIFrameElement>(null);
   function src() {
     const appHost = props.host || "https://app.documenso.com";
@@ -48,6 +57,7 @@ function EmbedDirectTemplate(props: EmbedDirectTemplateProps) {
           cssVars: props.cssVars,
           darkModeDisabled: props.darkModeDisabled,
           language: props.language,
+          allowDownloadPDF: props.allowDownloadPDF,
           ...props.additionalProps,
         })
       )

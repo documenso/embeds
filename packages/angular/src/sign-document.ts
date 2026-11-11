@@ -28,6 +28,14 @@ export type EmbedSignDocumentProps = {
   lockEmail?: boolean | undefined;
   allowDocumentRejection?: boolean | undefined;
 
+  /**
+   * Whether to show the "Download PDF" action. Defaults to `true`.
+   *
+   * This only hides the button, it does not prevent the recipient from downloading
+   * the document.
+   */
+  allowDownloadPDF?: boolean | undefined;
+
   // Additional props to be passed to the iframe, used for testing out features
   // prior to being added to the main props
   additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -45,6 +53,7 @@ export type EmbedSignDocumentProps = {
     reason: string;
   }) => void;
 };
+const defaultProps: any = { allowDownloadPDF: true };
 
 import { CssVars } from "./css-vars";
 
@@ -80,6 +89,8 @@ export default class EmbedSignDocument {
   @Input() language!: EmbedSignDocumentProps["language"];
   @Input()
   allowDocumentRejection!: EmbedSignDocumentProps["allowDocumentRejection"];
+  @Input() allowDownloadPDF: EmbedSignDocumentProps["allowDownloadPDF"] =
+    defaultProps["allowDownloadPDF"];
   @Input() additionalProps!: EmbedSignDocumentProps["additionalProps"];
   @Input() token!: EmbedSignDocumentProps["token"];
   @Input() clientUserId!: EmbedSignDocumentProps["clientUserId"];
@@ -105,6 +116,7 @@ export default class EmbedSignDocument {
           darkModeDisabled: this.darkModeDisabled,
           language: this.language,
           allowDocumentRejection: this.allowDocumentRejection,
+          allowDownloadPDF: this.allowDownloadPDF,
           ...this.additionalProps,
         })
       )

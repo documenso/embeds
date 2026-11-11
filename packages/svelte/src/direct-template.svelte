@@ -15,6 +15,14 @@
     name?: string | undefined;
     lockName?: boolean | undefined;
 
+    /**
+     * Whether to show the "Download PDF" action. Defaults to `true`.
+     *
+     * This only hides the button, it does not prevent the recipient from downloading
+     * the document.
+     */
+    allowDownloadPDF?: boolean | undefined;
+
     // Additional props to be passed to the iframe, used for testing out features
     // prior to being added to the main props
     additionalProps?: Record<string, string | number | boolean> | undefined;
@@ -45,6 +53,8 @@
   export let darkModeDisabled: EmbedDirectTemplateProps["darkModeDisabled"] =
     undefined;
   export let language: EmbedDirectTemplateProps["language"] = undefined;
+  export let allowDownloadPDF: EmbedDirectTemplateProps["allowDownloadPDF"] =
+    true;
   export let additionalProps: EmbedDirectTemplateProps["additionalProps"] =
     undefined;
   export let token: EmbedDirectTemplateProps["token"];
@@ -95,6 +105,7 @@
           cssVars: cssVars,
           darkModeDisabled: darkModeDisabled,
           language: language,
+          allowDownloadPDF: allowDownloadPDF,
           ...additionalProps,
         })
       )
